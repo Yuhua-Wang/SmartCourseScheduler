@@ -20,7 +20,7 @@ public class Section {
     private Term term;
 
 
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -35,5 +35,21 @@ public class Section {
 
     public void setTerm(Term term) {
         this.term = term;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Activity getActType() {
+        return actType;
+    }
+
+    public String getProf() {
+        return prof;
+    }
+
+    public Term getTerm() {
+        return term;
     }
 }
