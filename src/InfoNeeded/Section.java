@@ -19,4 +19,21 @@ public class Section {
     private String prof;
     private Term term;
 
+
+    
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setActType(Activity actType) {
+        this.actType = actType;
+    }
+
+    public void setProf(String prof) {
+        this.prof = prof;
+    }
+
+    public void setTerm(Term term) {
+        this.term = term;
+    }
 }
