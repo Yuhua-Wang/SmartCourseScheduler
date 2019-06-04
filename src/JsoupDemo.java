@@ -1,15 +1,11 @@
-import java.io.IOException;
-
-public class JsoupDemo {
-package com.imdb;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-    public class JsoupRun {
+public class JsoupDemo {
+
         public static void main(String[] args) {
 
 
@@ -26,8 +22,7 @@ import java.io.IOException;
                 for (int j=0; j < temp2.size(); j++){
                     System.out.println(temp2.get(j).text());
                 }
-//
             } catch (IOException e) {
                 e.printStackTrace();
             }
-}
+}}
