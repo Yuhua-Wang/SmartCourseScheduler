@@ -1,3 +1,5 @@
+package data;
+
 import InfoNeeded.Section;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -6,7 +8,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static InfoNeeded.Support.Term.*;
+import static Support.Term.*;
 
 public class JsoupDemo {
 

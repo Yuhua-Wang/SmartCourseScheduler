@@ -1,12 +1,7 @@
 package InfoNeeded;
 
-import InfoNeeded.Support.Activity;
-import static InfoNeeded.Support.Activity.*;
-import InfoNeeded.Support.Term;
-import javafx.util.Pair;
-
-import static InfoNeeded.Support.Term.*;
-
+import Support.Activity;
+import Support.Term;
 
 
 //represents a specific section of a course

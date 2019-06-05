@@ -1,4 +1,4 @@
-package InfoNeeded.Support;
+package Support;
 
 public enum  Term {
     TERM_1,

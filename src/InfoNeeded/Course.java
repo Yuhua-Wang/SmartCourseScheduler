@@ -1,9 +1,8 @@
 package InfoNeeded;
 
-import java.util.ArrayList;
+import Support.Activity;
 
-import InfoNeeded.Support.Activity;
-import InfoNeeded.Support.Activity.*;
+import java.util.ArrayList;
 
 
 //represent a course (not a specific section)

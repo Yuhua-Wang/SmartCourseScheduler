@@ -1,4 +1,4 @@
-package InfoNeeded.Support;
+package Support;
 
 // represents activity types (e.g. lectures, labs, tutorials)
 public enum Activity {
