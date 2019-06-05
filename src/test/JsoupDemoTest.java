@@ -36,6 +36,7 @@ public class JsoupDemoTest {
             System.out.println(testList.get(i));
         }
         System.out.println(testSection.getTerm());
+        System.out.println(testSection.getTitle());
     }
 
 }
