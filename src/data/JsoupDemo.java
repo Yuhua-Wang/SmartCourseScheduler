@@ -60,19 +60,10 @@ public class JsoupDemo {
 
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
-        if (result.get(1).child(1).text() != result.get(0).child(1).text()) {
+        if (result.get(1).child(1).text().isEmpty()) {
             fullYearCourse(my_list);
         } else {
-            for (int i = 0; i < result.size(); i++) {
-                Section mySection = setSection(i);
-                String curTerm = result.get(i).child(3).text();
-                if (Integer.parseInt(curTerm) == 1) {
-                    mySection.setTerm(TERM_1);
-                } else {
-                    mySection.setTerm(TERM_2);
-                }
-                my_list.add(mySection);
-            }
+            termCourse(my_list);
         }
         return my_list;
     }
@@ -81,6 +72,20 @@ public class JsoupDemo {
         for (int k = 0; k < result.size(); k += 2) {
             Section mySection = setSection(k);
             mySection.setTerm(YEAR_TERM);
+            list.add(mySection);
+        }
+        return list;
+    }
+
+    public ArrayList termCourse(ArrayList<Section> list){
+        for (int i = 0; i < result.size(); i++) {
+            Section mySection = setSection(i);
+            String curTerm = result.get(i).child(3).text();
+            if (Integer.parseInt(curTerm) == 1) {
+                mySection.setTerm(TERM_1);
+            } else {
+                mySection.setTerm(TERM_2);
+            }
             list.add(mySection);
         }
         return list;
