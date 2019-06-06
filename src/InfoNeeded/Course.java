@@ -40,10 +40,9 @@ public class Course {
     }
 
     //start data scraping with the given user input (course name, course number)
-    public String findCourseURL(String courseName, int courseNum){
-        String num = Integer.toString(courseNum);
+    public String findCourseURL(String courseName, String courseNum){
         return "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept="
                 +courseName+"&course="
-                +num;
+                +courseNum;
     }
 }

@@ -23,8 +23,8 @@ public class JsoupDemo {
     private Elements temp1;
     private Elements temp2;
 
-   public void dataScraping(String url){
-         myURL = url;
+    public void dataScraping(String url) {
+        myURL = url;
         try {
             Document doc = Jsoup.connect(myURL).get();
             //print title
@@ -33,8 +33,7 @@ public class JsoupDemo {
 
             temp1 = doc.select(".section1");
             temp2 = doc.select(".section2");
-            for (int i=0; i<temp2.size(); i++)
-            {
+            for (int i = 0; i < temp2.size(); i++) {
                 temp1.add(temp2.get(i));
             }
 
@@ -43,30 +42,45 @@ public class JsoupDemo {
         }
     }
 
-    public String getURL(){
-       return myURL;
+    public String getURL() {
+        return myURL;
     }
 
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
-        for (int i = 0; i < temp1.size(); i++) {
-            Section mySection = new Section();
-            String curString = temp1.get(i).child(1).text();
-            mySection.setTitle((curString+" ").split(" ")[2]);
-            String curTerm = temp1.get(i).child(3).text();
-            if(Integer.parseInt(curTerm) == 1){
-                mySection.setTerm(TERM_1);
+        if (temp1.get(1).child(1).text() == null) {
+            fullYearCourse(my_list);
+        } else {
+            for (int i = 0; i < temp1.size(); i++) {
+                Section mySection = setSection(i);
+                String curTerm = temp1.get(i).child(3).text();
+                if (Integer.parseInt(curTerm) == 1) {
+                    mySection.setTerm(TERM_1);
+                } else {
+                    mySection.setTerm(TERM_2);
+                }
+                my_list.add(mySection);
             }
-            else if(Integer.parseInt(curTerm) == 2){
-                mySection.setTerm(TERM_2);
-            }
-            else{
-                mySection.setTerm(YEAR_TERM);
-            }
-            my_list.add(mySection);
         }
         return my_list;
     }
 
+    public ArrayList fullYearCourse(ArrayList<Section> list) {
+        for (int k = 0; k < temp1.size(); k += 2) {
+            Section mySection = setSection(k);
+            mySection.setTerm(YEAR_TERM);
+            list.add(mySection);
+        }
+        return list;
+    }
+
+    public Section setSection(int index){
+        Section mySection = new Section();
+        if (temp1.get(index).child(1).text() != null) {
+            String curString = temp1.get(index).child(1).text();
+            mySection.setTitle((curString + "").split("")[2]);
+        }
+        return mySection;
+    }
 }
 
