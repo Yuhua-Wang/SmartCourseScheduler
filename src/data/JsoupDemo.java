@@ -3,10 +3,12 @@ package data;
 import InfoNeeded.Section;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static Support.Term.*;
 
@@ -22,6 +24,7 @@ public class JsoupDemo {
     private String comments;
     private Elements temp1;
     private Elements temp2;
+    Elements result;
 
     public void dataScraping(String url) {
         myURL = url;
@@ -33,10 +36,19 @@ public class JsoupDemo {
 
             temp1 = doc.select(".section1");
             temp2 = doc.select(".section2");
-            for (int i = 0; i < temp2.size(); i++) {
-                temp1.add(temp2.get(i));
+            Iterator<Element> l1 = temp1.iterator();
+            Iterator<Element> l2 = temp2.iterator();
+            result = new Elements();
+            while (l1.hasNext() || l2.hasNext()) {
+                if (l1.hasNext()) {
+                    result.add(l1.next());
+                }
+                if (l2.hasNext()) {
+                    result.add(l2.next());
+                }
             }
-
+//            System.out.println(result.get(1).child(2).text());
+//            System.out.println(result.get(0).child(1).text());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,12 +60,12 @@ public class JsoupDemo {
 
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
-        if (temp1.get(1).child(1).text() == null) {
+        if (result.get(1).child(1).text() != result.get(0).child(1).text()) {
             fullYearCourse(my_list);
         } else {
-            for (int i = 0; i < temp1.size(); i++) {
+            for (int i = 0; i < result.size(); i++) {
                 Section mySection = setSection(i);
-                String curTerm = temp1.get(i).child(3).text();
+                String curTerm = result.get(i).child(3).text();
                 if (Integer.parseInt(curTerm) == 1) {
                     mySection.setTerm(TERM_1);
                 } else {
@@ -66,7 +78,7 @@ public class JsoupDemo {
     }
 
     public ArrayList fullYearCourse(ArrayList<Section> list) {
-        for (int k = 0; k < temp1.size(); k += 2) {
+        for (int k = 0; k < result.size(); k += 2) {
             Section mySection = setSection(k);
             mySection.setTerm(YEAR_TERM);
             list.add(mySection);
@@ -76,10 +88,8 @@ public class JsoupDemo {
 
     public Section setSection(int index){
         Section mySection = new Section();
-        if (temp1.get(index).child(1).text() != null) {
-            String curString = temp1.get(index).child(1).text();
-            mySection.setTitle((curString + "").split("")[2]);
-        }
+            String curString = result.get(index).child(1).text();
+            mySection.setTitle((curString + " ").split(" ")[2]);
         return mySection;
     }
 }

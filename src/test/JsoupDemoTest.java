@@ -2,6 +2,7 @@ package test;
 
 import InfoNeeded.Course;
 import InfoNeeded.Section;
+import Support.Term;
 import data.JsoupDemo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsoupDemoTest {
@@ -25,21 +27,26 @@ public class JsoupDemoTest {
         jsoupDemo = new JsoupDemo();
         testCourse = new Course();
         testSection = new Section();
-        testURL = testCourse.findCourseURL("COMM","394");
+        testURL = testCourse.findCourseURL("HIST","380C");
         jsoupDemo.dataScraping(testURL);
         testList = jsoupDemo.getSections();
     }
 
     @Test
     public void testSection() {
-        assertTrue(testList.size() == 17);
+        assertTrue(testList.size() == 1);
         for (int i = 0; i < testList.size(); i++) {
-            System.out.println(testList.get(i));
+            System.out.println(testList.get(i).getTitle());
         }
     }
 
     @Test
     public void generalTest() throws IOException {
-        
+        assertEquals(Term.YEAR_TERM,testList.get(0).getTerm());
+        for (int i=0; i<testList.size(); i++){
+            System.out.println(testList.get(i).getTitle());
+            System.out.println(testList.get(i).getTerm());
+        }
+        assertEquals("001",testList.get(0).getTitle());
     }
 }
