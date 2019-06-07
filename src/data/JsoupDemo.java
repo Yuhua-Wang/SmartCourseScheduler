@@ -15,6 +15,7 @@ import static Support.Term.*;
 public class JsoupDemo {
 
     private String myURL;
+    private String profURL;
     private String section;
     private String type;
     private int term;
@@ -28,6 +29,7 @@ public class JsoupDemo {
 
     public void dataScraping(String url) {
         myURL = url;
+        profURL = splitURL(myURL);
         try {
             Document doc = Jsoup.connect(myURL).get();
             //print title
@@ -36,6 +38,8 @@ public class JsoupDemo {
 
             temp1 = doc.select(".section1");
             temp2 = doc.select(".section2");
+
+            // interleaving two sections from online html
             Iterator<Element> l1 = temp1.iterator();
             Iterator<Element> l2 = temp2.iterator();
             result = new Elements();
@@ -58,6 +62,7 @@ public class JsoupDemo {
         return myURL;
     }
 
+    //return a list of sections
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
         if (result.get(1).child(1).text().isEmpty()) {
@@ -95,7 +100,14 @@ public class JsoupDemo {
         Section mySection = new Section();
             String curString = result.get(index).child(1).text();
             mySection.setTitle((curString + " ").split(" ")[2]);
+            mySection.setProfURL(profURL);
         return mySection;
     }
-}
+
+    public String splitURL(String thatURL) {
+        String[] split0 = thatURL.split("-");
+        String[] split1 = split0[1].split("&");
+        return (split0[0] + "-section&" + split1[1] + "&" + split1[2] + "&section=");
+    }
+    }
 

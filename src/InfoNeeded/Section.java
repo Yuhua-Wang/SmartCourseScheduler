@@ -13,6 +13,7 @@ public class Section {
 
     private String prof;
     private Term term;
+    private String url;
 
 
 
@@ -26,6 +27,10 @@ public class Section {
 
     public void setProf(String prof) {
         this.prof = prof;
+    }
+
+    public void setProfURL(String url){
+        this.url = url + title;
     }
 
     public void setTerm(Term term) {
@@ -44,7 +49,12 @@ public class Section {
         return prof;
     }
 
+    public String getProfURL(){
+        return url;
+    }
+
     public Term getTerm() {
         return term;
     }
+
 }

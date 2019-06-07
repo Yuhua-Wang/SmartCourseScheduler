@@ -27,7 +27,7 @@ public class JsoupDemoTest {
         jsoupDemo = new JsoupDemo();
         testCourse = new Course();
         testSection = new Section();
-        testURL = testCourse.findCourseURL("COMM","394");
+        testURL = testCourse.findCourseURL("CPSC", "313");
         jsoupDemo.dataScraping(testURL);
         testList = jsoupDemo.getSections();
     }
@@ -42,11 +42,18 @@ public class JsoupDemoTest {
 
     @Test
     public void generalTest() throws IOException {
-        assertEquals(Term.TERM_1,testList.get(0).getTerm());
-        for (int i=0; i<testList.size(); i++){
+        assertEquals(Term.TERM_1, testList.get(0).getTerm());
+        for (int i = 0; i < testList.size(); i++) {
             System.out.println(testList.get(i).getTitle());
             System.out.println(testList.get(i).getTerm());
         }
-        assertEquals("101",testList.get(0).getTitle());
+        assertEquals("101", testList.get(0).getTitle());
+    }
+
+    @Test
+    public void testSettingProfURL() {
+        for (int i = 0; i < testList.size(); i++) {
+            System.out.println(testList.get(i).getProfURL());
+        }
     }
 }
