@@ -16,9 +16,7 @@ public class JsoupDemo {
 
     private String myURL;
     private String profURL;
-    private String section;
     private String type;
-    private int term;
     private String day;
     private int startingTime;
     private int endingTime;
@@ -30,6 +28,11 @@ public class JsoupDemo {
     public void dataScraping(String url) {
         myURL = url;
         profURL = splitURL(myURL);
+        try {
+            findProf(profURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             Document doc = Jsoup.connect(myURL).get();
             //print title
@@ -60,6 +63,10 @@ public class JsoupDemo {
 
     public String getURL() {
         return myURL;
+    }
+
+    public String getProfURL(){
+        return profURL;
     }
 
     //return a list of sections
@@ -108,6 +115,18 @@ public class JsoupDemo {
         String[] split0 = thatURL.split("-");
         String[] split1 = split0[1].split("&");
         return (split0[0] + "-section&" + split1[1] + "&" + split1[2] + "&section=");
+    }
+
+    public String findProf(String url) throws IOException {
+        String name = " ";
+        Document dc = Jsoup.connect(url).get();
+        Elements body = dc.select("div.table");
+        int i = 0;
+        for(Element list:body){
+            i++;
+            System.out.println(i+" "+list.getElementsByTag("a").first().text());
+        }
+        return name;
     }
     }
 

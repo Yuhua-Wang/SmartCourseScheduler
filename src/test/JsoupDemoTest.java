@@ -4,6 +4,9 @@ import InfoNeeded.Course;
 import InfoNeeded.Section;
 import Support.Term;
 import data.JsoupDemo;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,9 +54,22 @@ public class JsoupDemoTest {
     }
 
     @Test
-    public void testSettingProfURL() {
-        for (int i = 0; i < testList.size(); i++) {
-            System.out.println(testList.get(i).getProfURL());
+    public void testForProf() throws IOException {
+        Document document = Jsoup.connect(jsoupDemo.getProfURL()+"101").maxBodySize(1024*1024*10)
+                .timeout(0).ignoreContentType(true)
+                .execute().parse();
+        Document dc = Jsoup.connect(jsoupDemo.getProfURL()+"101").get();
+        Document dc1 = Jsoup.connect(jsoupDemo.getURL()).get();
+        Elements mine = dc1.select(".section1");
+        Elements body = document.select(".table");
+        System.out.println(body);
         }
     }
-}
+
+
+//    @Test
+//    public void testSettingProfURL() {
+//        for (int i = 0; i < testList.size(); i++) {
+//            System.out.println(testList.get(i).getProfURL());
+//        }
+//    }
