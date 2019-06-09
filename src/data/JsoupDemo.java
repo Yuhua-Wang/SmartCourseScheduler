@@ -118,14 +118,12 @@ public class JsoupDemo {
     }
 
     public String findProf(String url) throws IOException {
-        String name = " ";
-        Document dc = Jsoup.connect(url).get();
-        Elements body = dc.select("div.table");
-        int i = 0;
-        for(Element list:body){
-            i++;
-            System.out.println(i+" "+list.getElementsByTag("a").first().text());
-        }
+        String name;
+        String theURL = getProfURL()+"203";
+        Document dc = Jsoup.connect(theURL).get();
+        Elements body = dc.select(".table.table");
+        System.out.println(body.get(2).child(0).getElementsByTag("a").text());
+        name = body.get(2).child(0).getElementsByTag("a").text();
         return name;
     }
     }
