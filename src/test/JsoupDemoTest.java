@@ -27,7 +27,7 @@ public class JsoupDemoTest {
         jsoupDemo = new JsoupDemo();
         testCourse = new Course();
         testSection = new Section();
-        testURL = testCourse.findCourseURL("CPSC", "313");
+        testURL = testCourse.findCourseURL("CPSC", "210");
         jsoupDemo.dataScraping(testURL);
         testList = jsoupDemo.getSections();
     }
@@ -48,5 +48,12 @@ public class JsoupDemoTest {
             System.out.println(testList.get(i).getTerm());
         }
         assertEquals("101", testList.get(0).getTitle());
+    }
+
+    @Test
+    public void findProfTest() {
+        for (int i = 0; i < testList.size(); i++) {
+            System.out.println(testList.get(i).getProf());
+        }
     }
 }

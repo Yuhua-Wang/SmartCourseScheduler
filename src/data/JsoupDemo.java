@@ -29,11 +29,6 @@ public class JsoupDemo {
         myURL = url;
         profURL = splitURL(myURL);
         try {
-            findProf(profURL);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             Document doc = Jsoup.connect(myURL).get();
             //print title
             String title = doc.title();
@@ -54,8 +49,6 @@ public class JsoupDemo {
                     result.add(l2.next());
                 }
             }
-//            System.out.println(result.get(1).child(2).text());
-//            System.out.println(result.get(0).child(1).text());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +58,7 @@ public class JsoupDemo {
         return myURL;
     }
 
-    public String getProfURL(){
+    public String getProfURL() {
         return profURL;
     }
 
@@ -89,7 +82,7 @@ public class JsoupDemo {
         return list;
     }
 
-    public ArrayList termCourse(ArrayList<Section> list){
+    public ArrayList termCourse(ArrayList<Section> list) {
         for (int i = 0; i < result.size(); i++) {
             Section mySection = setSection(i);
             String curTerm = result.get(i).child(3).text();
@@ -103,11 +96,18 @@ public class JsoupDemo {
         return list;
     }
 
-    public Section setSection(int index){
+    public Section setSection(int index) {
+        String profName;
         Section mySection = new Section();
-            String curString = result.get(index).child(1).text();
-            mySection.setTitle((curString + " ").split(" ")[2]);
-            mySection.setProfURL(profURL);
+        String curString = result.get(index).child(1).text();
+        mySection.setTitle((curString + " ").split(" ")[2]);
+        mySection.setProfURL(profURL);
+        try {
+            profName = findProf(profURL, mySection.getTitle());
+            mySection.setProf(profName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return mySection;
     }
 
@@ -117,14 +117,18 @@ public class JsoupDemo {
         return (split0[0] + "-section&" + split1[1] + "&" + split1[2] + "&section=");
     }
 
-    public String findProf(String url) throws IOException {
+    public String findProf(String url, String sectionNum) throws IOException {
         String name;
-        String theURL = getProfURL()+"203";
+        String theURL = url + sectionNum;
         Document dc = Jsoup.connect(theURL).get();
         Elements body = dc.select(".table.table");
-        System.out.println(body.get(2).child(0).getElementsByTag("a").text());
-        name = body.get(2).child(0).getElementsByTag("a").text();
+        String section = body.get(2).child(0).getElementsByTag("a").text();
+        if (section.isEmpty()||section=="TBA") {
+            name = "Prof currently not available";
+            }
+        else {
+            name = section;
+        }
         return name;
     }
-    }
-
+}
