@@ -16,7 +16,20 @@ public class Section {
     private ArrayList<ClassTime> classTimes;
     private String url;
 
-
+// return true if the 2 section has time conflict
+    public boolean hasTimeConflict(Section theOther){
+        if (term != theOther.term){
+            return false;
+        }
+        for (ClassTime ct : classTimes){
+            for (ClassTime tct : theOther.classTimes){
+                if (ct.hasTimeConflict(tct)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public void setTitle(String title) {
         this.title = title;

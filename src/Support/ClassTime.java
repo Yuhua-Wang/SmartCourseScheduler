@@ -10,6 +10,16 @@ public class ClassTime {
 
     //TODO: a constructor converting Strings into types needed
 
+    //check if there is a time conflict between 2 ClassTime
+    // 3 possible situations for *no* conflict :
+    //              - on different day of the week
+    //              - this starts after the other ends
+    //              - this ends before the other starts
+    public boolean hasTimeConflict(ClassTime theOther){
+        return  !(dayOfWeek != theOther.dayOfWeek || startTime.isAfter(theOther.endTime)
+                                                               ||endTime.isBefore(theOther.startTime));
+    }
+
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }

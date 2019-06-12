@@ -12,6 +12,13 @@ public class For_Eyeballing {
         c.setStartTime(st);
         c.setEndTime(et);
         System.out.println(c);
+        if (st.isAfter(et)){
+            System.out.println("wrong");
+        } else if (st.isAfter(st)){
+            System.out.println("st is after itself");
+        } else if (st.isBefore(st)){
+            System.out.println("st is before itself");
+        }
     }
 }
 
