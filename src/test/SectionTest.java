@@ -141,4 +141,36 @@ public class SectionTest {
         s2.addClassTime(c3);
         assertFalse(s1.hasTimeConflict(s2));
     }
+
+    @Test
+    public void hasTimeConflictTest_someOverlap(){
+        Section s1 = new Section();
+        s1.setTerm(TERM_1);
+        LocalTime st1 = LocalTime.of(9,0);
+        LocalTime et1 = LocalTime.of(10,0);
+        ClassTime c1 = new ClassTime();
+        c1.setDayOfWeek(MONDAY);
+        c1.setStartTime(st1);
+        c1.setEndTime(et1);
+        s1.addClassTime(c1);
+
+        Section s2 = new Section();
+        s2.setTerm(TERM_1);
+        LocalTime st2 = LocalTime.of(9,0);
+        LocalTime et2 = LocalTime.of(10,0);
+        ClassTime c2 = new ClassTime();
+        c2.setDayOfWeek(MONDAY);
+        c2.setStartTime(st2);
+        c2.setEndTime(et2);
+        LocalTime st3 = LocalTime.of(8,0);
+        LocalTime et3 = LocalTime.of(9,0);
+        ClassTime c3 = new ClassTime();
+        c3.setDayOfWeek(MONDAY);
+        c3.setStartTime(st3);
+        c3.setEndTime(et3);
+        s2.addClassTime(c2);
+        s2.addClassTime(c3);
+        assertTrue(s1.hasTimeConflict(s2));
+
+    }
 }
