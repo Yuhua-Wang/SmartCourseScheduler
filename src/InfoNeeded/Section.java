@@ -13,7 +13,7 @@ public class Section {
     private Activity actType;
     private String prof;
     private Term term;
-    private ArrayList<ClassTime> classTimes;
+    private ArrayList<ClassTime> classTimes = new ArrayList<>();
     private String url;
 
 // return true if the 2 section has time conflict
@@ -33,6 +33,10 @@ public class Section {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void addClassTime(ClassTime ct){
+        classTimes.add(ct);
     }
 
     public void setActType(Activity actType) {
