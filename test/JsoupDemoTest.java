@@ -26,7 +26,7 @@ public class JsoupDemoTest {
         jsoupDemo = new JsoupDemo();
         testCourse = new Course();
         testSection = new Section();
-        testURL = testCourse.findCourseURL("CPSC", "310");
+        testURL = testCourse.findCourseURL("COMM", "390");
         jsoupDemo.dataScraping(testURL);
         testList = jsoupDemo.getSections();
     }
