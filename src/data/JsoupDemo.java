@@ -72,7 +72,12 @@ public class JsoupDemo {
 
     public ArrayList fullYearCourse(ArrayList<Section> list) {
         for (int k = 0; k < result.size(); k += 2) {
-            Section mySection = setSection(k);
+            Section mySection = null;
+            try {
+                mySection = setSection(k);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             mySection.setTerm(YEAR_TERM);
             list.add(mySection);
         }
@@ -81,7 +86,9 @@ public class JsoupDemo {
 
     public ArrayList termCourse(ArrayList<Section> list) {
         for (int i = 0; i < result.size(); i++) {
-            Section mySection = setSection(i);
+            try {
+                Section mySection = setSection(i);
+
             String curTerm = result.get(i).child(3).text();
             if (Integer.parseInt(curTerm) == 1) {
                 mySection.setTerm(TERM_1);
@@ -89,22 +96,25 @@ public class JsoupDemo {
                 mySection.setTerm(TERM_2);
             }
             list.add(mySection);
+            }catch (Exception e){
+                i--;
+            }
         }
         return list;
     }
 
-    public Section setSection(int index) {
+    public Section setSection(int index) throws Exception {
         String profName;
         Section mySection = new Section();
         String curString = result.get(index).child(1).text();
         mySection.setTitle((curString + " ").split(" ")[2]);
         mySection.setProfURL(profURL);
-        try {
+        //try {
             profName = findProf(profURL, mySection.getTitle());
             mySection.setProf(profName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+           // e.printStackTrace();
+        //}
         return mySection;
     }
 
@@ -117,15 +127,24 @@ public class JsoupDemo {
     public String findProf(String url, String sectionNum) throws IOException {
         String name;
         String theURL = url + sectionNum;
+        System.out.println(theURL);
         Document dc = Jsoup.connect(theURL).get();
-        Elements body = dc.select(".table.table");
-        String section = body.get(2).child(0).getElementsByTag("a").text();
-        if (section.isEmpty()||section=="TBA") {
-            name = "Prof currently not available";
-            }
-        else {
-            name = section;
+        Elements body = dc.select("table tr td");
+        try{
+            Elements a = body.select("a");
+            System.out.println(a.text());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        return name;
+        //System.out.println(body.text());
+        //String section = body.get(2).child(0).getElementsByTag("a").text();
+//        if (section.isEmpty()||section=="TBA") {
+//            name = "Prof currently not available";
+//            }
+//        else {
+//            name = section;
+//        }
+//        return name;
+        return "";
     }
 }
