@@ -1,17 +1,16 @@
-package test;
-
 import InfoNeeded.Course;
 import InfoNeeded.Section;
 import Support.Term;
 import data.JsoupDemo;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class JsoupDemoTest {
     private Section testSection;
