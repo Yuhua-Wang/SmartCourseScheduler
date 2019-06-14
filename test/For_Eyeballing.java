@@ -1,23 +1,23 @@
 import Support.ClassTime;
+
+import java.io.IOException;
 import java.time.*;
 import static java.time.DayOfWeek.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
 
 public class For_Eyeballing {
     public static void main(String[] args) {
-        LocalTime st = LocalTime.of(13,0);
-        LocalTime et = LocalTime.of(14,0);
-        ClassTime c = new ClassTime();
-        c.setDayOfWeek(MONDAY);
-        c.setStartTime(st);
-        c.setEndTime(et);
-        System.out.println(c);
-        if (st.isAfter(et)){
-            System.out.println("wrong");
-        } else if (st.isAfter(st)){
-            System.out.println("st is after itself");
-        } else if (st.isBefore(st)){
-            System.out.println("st is before itself");
+        String url = "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=ASIA&course=371";
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            System.out.println(title);
+            Elements temp1 = doc.select(".section1");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

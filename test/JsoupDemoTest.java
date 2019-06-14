@@ -5,6 +5,7 @@ import data.JsoupDemo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,6 +38,10 @@ public class JsoupDemoTest {
 //        for (int i = 0; i < testList.size(); i++) {
 //            System.out.println(testList.get(i).getTitle());
 //        }
+        //assertTrue(testList.size() == 17);
+        for (int i = 0; i < testList.size(); i++) {
+            System.out.println(testList.get(i).getTitle());
+        }
     }
 
     @Test
