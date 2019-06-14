@@ -2,10 +2,7 @@ import InfoNeeded.Section;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import Support.ClassTime;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalTime;
-
 import static Support.Activity.LECTURE;
 import static Support.Term.TERM_1;
 import static Support.Term.TERM_2;

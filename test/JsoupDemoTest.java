@@ -33,31 +33,37 @@ public class JsoupDemoTest {
     }
 
     @Test
-    public void testSection() {
-//        assertTrue(testList.size() == 17);
+    public void bullshit(){
+
+    }
+
+//
+//    @Test
+//    public void testSection() {
+////        assertTrue(testList.size() == 17);
+////        for (int i = 0; i < testList.size(); i++) {
+////            System.out.println(testList.get(i).getTitle());
+////        }
+//        //assertTrue(testList.size() == 17);
 //        for (int i = 0; i < testList.size(); i++) {
 //            System.out.println(testList.get(i).getTitle());
 //        }
-        //assertTrue(testList.size() == 17);
-        for (int i = 0; i < testList.size(); i++) {
-            System.out.println(testList.get(i).getTitle());
-        }
-    }
-
-    @Test
-    public void generalTest() throws IOException {
-        assertEquals(Term.TERM_1, testList.get(0).getTerm());
-        for (int i = 0; i < testList.size(); i++) {
-            System.out.println(testList.get(i).getTitle());
-            System.out.println(testList.get(i).getTerm());
-        }
-        assertEquals("101", testList.get(0).getTitle());
-    }
-
-    @Test
-    public void findProfTest() {
-        for (int i = 0; i < testList.size(); i++) {
-            System.out.println(testList.get(i).getProf());
-        }
-    }
+//    }
+//
+//    @Test
+//    public void generalTest() throws IOException {
+//        assertEquals(Term.TERM_1, testList.get(0).getTerm());
+//        for (int i = 0; i < testList.size(); i++) {
+//            System.out.println(testList.get(i).getTitle());
+//            System.out.println(testList.get(i).getTerm());
+//        }
+//        assertEquals("101", testList.get(0).getTitle());
+//    }
+//
+//    @Test
+//    public void findProfTest() {
+//        for (int i = 0; i < testList.size(); i++){
+//            System.out.println(testList.get(i).getProf());
+//        }
+//    }
 }
