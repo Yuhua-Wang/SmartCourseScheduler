@@ -18,6 +18,7 @@ public class JsoupDemo {
     private String profURL;
     private String type;
     private String day;
+    private String courseTitle;
     private int startingTime;
     private int endingTime;
     private String comments;
@@ -30,14 +31,12 @@ public class JsoupDemo {
         profURL = splitURL(myURL);
         try {
             Document doc = Jsoup.connect(myURL).get();
-            //print title
-            String title = doc.title();
-            System.out.println(title);
-
-            temp1 = doc.select(".section1");
-            temp2 = doc.select(".section2");
+            //get course title
+            courseTitle = doc.title().split("-")[0];
 
             // interleaving two sections from online html
+            temp1 = doc.select(".section1");
+            temp2 = doc.select(".section2");
             Iterator<Element> l1 = temp1.iterator();
             Iterator<Element> l2 = temp2.iterator();
             result = new Elements();
@@ -60,6 +59,10 @@ public class JsoupDemo {
 
     public String getProfURL() {
         return profURL;
+    }
+
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
     //return a list of sections
@@ -112,12 +115,9 @@ public class JsoupDemo {
         String curString = result.get(index).child(1).text();
         mySection.setTitle((curString + " ").split(" ")[2]);
         mySection.setProfURL(profURL);
-        //try {
-            profName = findProf(profURL, mySection.getTitle());
-            mySection.setProf(profName);
-        //} catch (IOException e) {
-           // e.printStackTrace();
-        //}
+        profName = findProf(profURL, mySection.getTitle());
+        day = findDay(mySection.getTitle());
+        mySection.setProf(profName);
         return mySection;
     }
 
@@ -127,27 +127,34 @@ public class JsoupDemo {
         return (split0[0] + "-section&" + split1[1] + "&" + split1[2] + "&section=");
     }
 
+    public String findDay(String sectionNum) throws IOException {
+        Document dc = Jsoup.connect(profURL+sectionNum).get();
+        Elements body = dc.select(".table.table-striped tr");
+        String thisDay = body.get(1).child(1).text();
+        System.out.println(thisDay);
+        return thisDay;
+    }
+
     public String findProf(String url, String sectionNum) throws IOException {
-        String name;
+        String name = "";
         String theURL = url + sectionNum;
-        System.out.println(theURL);
+
         Document dc = Jsoup.connect(theURL).get();
         Elements body = dc.select("table tr td");
         try{
+            //ignore the first "numbers" to extract full prof name
+            //for more than 1 prof, currently put their names in one string, need to split for later use
             Elements a = body.select("a");
-            System.out.println(a.text());
+            if(a.text().isEmpty()){
+                name = "Ooooops, prof is unavailable";
+            }
+            else {
+                int s = a.text().indexOf(" ");
+                name = a.text().substring(s + 1);
+            }
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        //System.out.println(body.text());
-        //String section = body.get(2).child(0).getElementsByTag("a").text();
-//        if (section.isEmpty()||section=="TBA") {
-//            name = "Prof currently not available";
-//            }
-//        else {
-//            name = section;
-//        }
-//        return name;
-        return "";
+        return name;
     }
 }
