@@ -1,12 +1,15 @@
 package data;
+
 import InfoNeeded.Section;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import static Support.Term.*;
 
 public class JsoupDemo {
@@ -15,6 +18,7 @@ public class JsoupDemo {
     private String profURL;
     private String type;
     private String day;
+    private String courseTitle;
     private int startingTime;
     private int endingTime;
     private String comments;
@@ -27,14 +31,12 @@ public class JsoupDemo {
         profURL = splitURL(myURL);
         try {
             Document doc = Jsoup.connect(myURL).get();
-            //print title
-            String title = doc.title();
-            System.out.println(title);
-
-            temp1 = doc.select(".section1");
-            temp2 = doc.select(".section2");
+            //get course title
+            courseTitle = doc.title().split("-")[0];
 
             // interleaving two sections from online html
+            temp1 = doc.select(".section1");
+            temp2 = doc.select(".section2");
             Iterator<Element> l1 = temp1.iterator();
             Iterator<Element> l2 = temp2.iterator();
             result = new Elements();
@@ -59,6 +61,10 @@ public class JsoupDemo {
         return profURL;
     }
 
+    public String getCourseTitle() {
+        return courseTitle;
+    }
+
     //return a list of sections
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
@@ -72,7 +78,12 @@ public class JsoupDemo {
 
     public ArrayList fullYearCourse(ArrayList<Section> list) {
         for (int k = 0; k < result.size(); k += 2) {
-            Section mySection = setSection(k);
+            Section mySection = null;
+            try {
+                mySection = setSection(k);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             mySection.setTerm(YEAR_TERM);
             list.add(mySection);
         }
@@ -81,7 +92,9 @@ public class JsoupDemo {
 
     public ArrayList termCourse(ArrayList<Section> list) {
         for (int i = 0; i < result.size(); i++) {
-            Section mySection = setSection(i);
+            try {
+                Section mySection = setSection(i);
+
             String curTerm = result.get(i).child(3).text();
             if (Integer.parseInt(curTerm) == 1) {
                 mySection.setTerm(TERM_1);
@@ -89,22 +102,22 @@ public class JsoupDemo {
                 mySection.setTerm(TERM_2);
             }
             list.add(mySection);
+            }catch (Exception e){
+                i--;
+            }
         }
         return list;
     }
 
-    public Section setSection(int index) {
+    public Section setSection(int index) throws Exception {
         String profName;
         Section mySection = new Section();
         String curString = result.get(index).child(1).text();
         mySection.setTitle((curString + " ").split(" ")[2]);
         mySection.setProfURL(profURL);
-        try {
-            profName = findProf(profURL, mySection.getTitle());
-            mySection.setProf(profName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        profName = findProf(profURL, mySection.getTitle());
+        day = findDay(mySection.getTitle());
+        mySection.setProf(profName);
         return mySection;
     }
 
@@ -114,20 +127,33 @@ public class JsoupDemo {
         return (split0[0] + "-section&" + split1[1] + "&" + split1[2] + "&section=");
     }
 
+    public String findDay(String sectionNum) throws IOException {
+        Document dc = Jsoup.connect(profURL+sectionNum).get();
+        Elements body = dc.select(".table.table-striped tr");
+        String thisDay = body.get(1).child(1).text();
+        System.out.println(thisDay);
+        return thisDay;
+    }
+
     public String findProf(String url, String sectionNum) throws IOException {
-        String name;
+        String name = "";
         String theURL = url + sectionNum;
-        System.out.println("120");
-        System.out.println(theURL);
+
         Document dc = Jsoup.connect(theURL).get();
-        System.out.println("122");
-        Elements body = dc.select("table");
-        String section = body.get(2).child(0).getElementsByTag("a").text();
-        if (section.isEmpty()||section=="TBA") {
-            name = "Prof currently not available";
+        Elements body = dc.select("table tr td");
+        try{
+            //ignore the first "numbers" to extract full prof name
+            //for more than 1 prof, currently put their names in one string, need to split for later use
+            Elements a = body.select("a");
+            if(a.text().isEmpty()){
+                name = "Ooooops, prof is unavailable";
             }
-        else {
-            name = section;
+            else {
+                int s = a.text().indexOf(" ");
+                name = a.text().substring(s + 1);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
         return name;
     }
