@@ -10,12 +10,11 @@ import org.jsoup.select.Elements;
 
 public class For_Eyeballing {
     public static void main(String[] args) {
-        String url = "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=ASIA&course=371";
+        String url = "https://slacknotes.com/grades/CPSC210?Professor=baniassad,%20elisa;eiselt,%20kurt";
         try {
             Document doc = Jsoup.connect(url).get();
-            String title = doc.title();
-            System.out.println(title);
-            Elements temp1 = doc.select(".section1");
+            Elements averageBlock = doc.getElementsByClass("class-header-info center");
+            System.out.println(averageBlock);
         } catch (IOException e) {
             e.printStackTrace();
         }
