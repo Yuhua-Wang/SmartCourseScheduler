@@ -147,7 +147,6 @@ public class JsoupDemo {
             //if there is no prof element: 1. no room number/prof 2. there is only room number, then the number is less than 4 char long
             if (b.size()==0||b.last().text().length()<4) {
                 name = "Ooooops, prof is unavailable";
-                System.out.println(name);
             } else {
                 Element a = b.last();
                 String[] splitLastName = a.text().split(",");
@@ -157,8 +156,8 @@ public class JsoupDemo {
                 } else {
                         name = oneProf(splitLastName[0])+oneProf(splitLastName[1]);
                     }
-                System.out.println(name);
             }
+            System.out.println(name);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
