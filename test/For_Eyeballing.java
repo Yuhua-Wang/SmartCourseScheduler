@@ -1,20 +1,17 @@
-import Support.ClassTime;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.time.*;
-import static java.time.DayOfWeek.*;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
-import org.jsoup.select.Elements;
 
 
 public class For_Eyeballing {
     public static void main(String[] args) {
-        String url = "https://slacknotes.com/grades/CPSC210?Professor=baniassad,%20elisa;eiselt,%20kurt";
+        String url = "https://slacknotes.com/grades/CPSC210?Professor=baniassad,%20elisa";
         try {
-            Document doc = Jsoup.connect(url).get();
-            Elements averageBlock = doc.getElementsByClass("class-header-info center");
-            System.out.println(averageBlock);
+            Document doc = Jsoup.connect(url).userAgent("Mozilla").get();
+            Elements averageBlock = doc.select("div.class-header-info.center");
+            System.out.println(averageBlock.text());
         } catch (IOException e) {
             e.printStackTrace();
         }

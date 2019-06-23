@@ -68,7 +68,7 @@ public class JsoupDemo {
     //return a list of sections
     public ArrayList getSections() {
         ArrayList<Section> my_list = new ArrayList<>();
-        if (result.get(1).child(1).text().isEmpty()) {
+        if (result.get(0).child(3).text().length() > 1 || result.get(1).child(1).text().isEmpty()) {
             fullYearCourse(my_list);
         } else {
             termCourse(my_list);
@@ -94,15 +94,14 @@ public class JsoupDemo {
         for (int i = 0; i < result.size(); i++) {
             try {
                 Section mySection = setSection(i);
-
-            String curTerm = result.get(i).child(3).text();
-            if (Integer.parseInt(curTerm) == 1) {
-                mySection.setTerm(TERM_1);
-            } else {
-                mySection.setTerm(TERM_2);
-            }
-            list.add(mySection);
-            }catch (Exception e){
+                String curTerm = result.get(i).child(3).text();
+                if (Integer.parseInt(curTerm) == 1) {
+                    mySection.setTerm(TERM_1);
+                } else {
+                    mySection.setTerm(TERM_2);
+                }
+                list.add(mySection);
+            } catch (Exception e) {
                 i--;
             }
         }
@@ -128,10 +127,10 @@ public class JsoupDemo {
     }
 
     public String findDay(String sectionNum) throws IOException {
-        Document dc = Jsoup.connect(profURL+sectionNum).get();
+        Document dc = Jsoup.connect(profURL + sectionNum).get();
         Elements body = dc.select(".table.table-striped tr");
         String thisDay = body.get(1).child(1).text();
-        System.out.println(thisDay);
+        //System.out.println(thisDay);
         return thisDay;
     }
 
@@ -141,20 +140,46 @@ public class JsoupDemo {
 
         Document dc = Jsoup.connect(theURL).get();
         Elements body = dc.select("table tr td");
-        try{
+        try {
             //ignore the first "numbers" to extract full prof name
             //for more than 1 prof, currently put their names in one string, need to split for later use
-            Elements a = body.select("a");
-            if(a.text().isEmpty()){
+            Elements b = body.select("a");
+            //if there is no prof element: 1. no room number/prof 2. there is only room number, then the number is less than 4 char long
+            if (b.size()==0||b.last().text().length()<4) {
                 name = "Ooooops, prof is unavailable";
+                System.out.println(name);
+            } else {
+                Element a = b.last();
+                String[] splitLastName = a.text().split(",");
+                // when there are more than one ",", there must be more than one prof
+                if (splitLastName.length > 2) {
+                    name = moreThanOneProf();
+                } else {
+                        name = oneProf(splitLastName[0])+oneProf(splitLastName[1]);
+                    }
+                System.out.println(name);
             }
-            else {
-                int s = a.text().indexOf(" ");
-                name = a.text().substring(s + 1);
-            }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return name;
+    }
+
+    public String moreThanOneProf() {
+        return "";
+    }
+
+    // when there is a single prof, turn his/her name into the form of last_name+first_name
+    public String oneProf(String name) {
+        String profName = "";
+        String[] splitName = name.split(" ");
+        for (int i = 0; i < splitName.length; i++) {
+            if (i == splitName.length - 1) {
+                profName += splitName[i];
+            } else {
+                profName += splitName[i] + "+";
+            }
+        }
+        return profName;
     }
 }
