@@ -13,10 +13,24 @@ public class Section {
     private Activity actType;
     private String prof;
     private Term term;
-    private ArrayList<ClassTime> classTimes = new ArrayList<>();
+    private ArrayList<ClassTime> classTimes;
     private String url;
 
-// return true if the 2 section has time conflict
+//Constructor
+    public Section(){
+
+    }
+
+    public Section(String title, Activity actType, String prof, Term term, String url) {
+        this.title = title;
+        this.actType = actType;
+        this.prof = prof;
+        this.term = term;
+        this.url = url;
+        this.classTimes = new ArrayList<>();
+    }
+
+    // return true if the 2 section has time conflict
     public boolean hasTimeConflict(Section theOther){
         if (term != theOther.term){
             return false;
@@ -75,4 +89,8 @@ public class Section {
         return term;
     }
 
+    @Override
+    public String toString() {
+        return title;
+    }
 }

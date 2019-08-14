@@ -1,3 +1,5 @@
+import org.chocosolver.solver.Model;
+import org.chocosolver.solver.variables.IntVar;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -7,14 +9,23 @@ import java.io.IOException;
 
 public class For_Eyeballing {
     public static void main(String[] args) {
-        String url = "https://slacknotes.com/grades/CPSC210?Professor=baniassad,%20elisa";
-        try {
-            Document doc = Jsoup.connect(url).userAgent("Mozilla").get();
-            Elements averageBlock = doc.select("div.class-header-info.center");
-            System.out.println(averageBlock.text());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Model model = new Model("testing");
+
+        IntVar x = model.intVar("X",1,5);
+        IntVar y = model.intVar("Y",new int[]{3,2,7});
+        IntVar z = model.intVar("Z", 2,4);
+
+        model.arithm(x,">",y).post();
+        model.arithm(y,"<",z).post();
+        model.arithm(x,"=",z).post();
+
+        model.getSolver().solve();
+        long a = model.getSolver().getSolutionCount();
+        System.out.println(a);
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(z);
+
     }
 }
 

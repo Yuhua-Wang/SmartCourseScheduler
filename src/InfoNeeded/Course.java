@@ -4,10 +4,13 @@ import Support.Activity;
 import data.JsoupDemo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 
 //represent a course (not a specific section)
-public class Course {
+public class Course implements Iterable<Section> {
 
     //--------- fields ------------------------------------------------------
     private String title;
@@ -23,6 +26,7 @@ public class Course {
 
 
     //-----------------------------------------------------------------------
+
 
 
 
@@ -44,5 +48,10 @@ public class Course {
         return "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept="
                 +courseName+"&course="
                 +courseNum;
+    }
+
+    @Override
+    public Iterator<Section> iterator() {
+        return sections.iterator();
     }
 }
