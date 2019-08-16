@@ -36,8 +36,12 @@ public class Scheduler {
             }
         }
 
-        //TODO:  model.solve   print variable to test,  in NTC.propagate( ): remove a section which conflict with all sections of the other variable
-
+        model.getSolver().solve();
+        for (int i = 0; i < cas.length; i++){
+            System.out.println(cas[i]);
+        }
+        //TODO: return Sections
+        //TODO: how to get all solutions?
 
         return null;
     }

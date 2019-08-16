@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class NoTimeConflict extends Propagator<IntVar> {
     private ArrayList<CourseActivity> courseActivities;
     // index of CourseActivity represented by the variables in courseActivities
-    int index_x;
-    int index_y;
+    private int index_x;
+    private int index_y;
 
     public NoTimeConflict(IntVar x, IntVar y, ArrayList<CourseActivity> cas){
         super(new IntVar[]{x,y}, PropagatorPriority.BINARY, false );
@@ -27,9 +27,43 @@ public class NoTimeConflict extends Propagator<IntVar> {
 
     @Override
     //this function removes from its variables domain, values that cannot belong to any solutions
-    // all values are possible to exist in some solutions
+    // remove a section which conflict which all sections of the other variable
     public void propagate(int i) throws ContradictionException {
 
+        for(int a = 0; a < courseActivities.get(0).getSections().size(); a++){
+            // first check if a is in the domain of the first variable
+            if (vars[0].contains(a)){
+                // if it is, get the corresponding section represented by a
+                Section s1 = courseActivities.get(0).getSections().get(a);
+                boolean hasPossibleSolution = false;
+                // check if it conflicts with each section of the second variable
+                for (Section s2 : courseActivities.get(1)){
+                    if (!s1.hasTimeConflict(s2)){
+                        hasPossibleSolution = true;
+                    }
+                }
+                // remove this section/value from the domain if it conflicts with each section of the second variable
+                if (!hasPossibleSolution){
+                    vars[0].removeValue(a, this);
+                }
+            }
+        }
+
+        // do the same for the second variable
+        for(int b = 0; b < courseActivities.get(1).getSections().size(); b++){
+            if (vars[1].contains(b)){
+                Section s2 = courseActivities.get(1).getSections().get(b);
+                boolean hasPossibleSolution = false;
+                for (Section s1 : courseActivities.get(0)){
+                    if (!s2.hasTimeConflict(s2)){
+                        hasPossibleSolution = true;
+                    }
+                }
+                if (!hasPossibleSolution){
+                    vars[1].removeValue(b, this);
+                }
+            }
+        }
     }
 
     @Override
