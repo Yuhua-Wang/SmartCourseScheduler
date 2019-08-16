@@ -12,7 +12,7 @@ public class Scheduler {
     private ArrayList<CourseActivity> courseActivities;
     private int size;
 
-    public void initialize(ArrayList<CourseActivity> courseActivities){
+    public Scheduler(ArrayList<CourseActivity> courseActivities){
         this.courseActivities = courseActivities;
         size = courseActivities.size();
     }

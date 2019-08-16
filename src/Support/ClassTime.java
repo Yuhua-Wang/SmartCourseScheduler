@@ -10,6 +10,16 @@ public class ClassTime {
 
     //TODO: a constructor converting Strings into types needed
 
+    public ClassTime(){
+
+    }
+
+    public ClassTime(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime){
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     //check if there is a time conflict between 2 ClassTime
     // 3 possible situations for *no* conflict :
     //              - on different day of the week

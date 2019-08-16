@@ -21,7 +21,7 @@ public class JsoupDemoTest {
     @BeforeEach
     public void runBefore() {
         jsoupDemo = new JsoupDemo();
-        testCourse = new Course();
+        testCourse = new Course("test");
         testSection = new Section();
         testURL = testCourse.findCourseURL("COMM", "395");
         jsoupDemo.dataScraping(testURL);

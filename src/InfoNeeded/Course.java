@@ -27,6 +27,11 @@ public class Course implements Iterable<Section> {
 
     //-----------------------------------------------------------------------
 
+    public Course(String title){
+        sections = new ArrayList<>();
+        requiredActivities = new ArrayList<>();
+        this.title = title;
+    }
 
 
 
