@@ -18,7 +18,7 @@ public class NoTimeConflict extends Propagator<IntVar> {
     private int index_y;
 
     public NoTimeConflict(IntVar x, IntVar y, ArrayList<CourseActivity> cas){
-        super(new IntVar[]{x,y}, PropagatorPriority.BINARY, false );
+        super(new IntVar[]{x,y}, PropagatorPriority.LINEAR, false );
         courseActivities = cas;
         //obtain the index of the variable in courseActivities from its name (n in "CA_n")
         index_x = Integer.parseInt(vars[0].getName().split("_")[1]);
@@ -29,19 +29,16 @@ public class NoTimeConflict extends Propagator<IntVar> {
     //this function removes from its variables domain, values that cannot belong to any solutions
     // remove a section which conflict which all sections of the other variable
     public void propagate(int i) throws ContradictionException {
-
-        // TODO: something wrong here, how do the program check the third and onward variables? ca.get(0) and ca.get(1) always work on the first 2 variables...
-
-        for(int a = 0; a < courseActivities.get(0).getSections().size(); a++){
+        for(int a = 0; a < courseActivities.get(index_x).getSections().size(); a++){
             // first check if a is in the domain of the first variable
             if (vars[0].contains(a)){
                 // if it is, get the corresponding section represented by a
-                Section s1 = courseActivities.get(0).getSections().get(a);
+                Section s1 = courseActivities.get(index_x).getSections().get(a);
                 boolean hasPossibleSolution = false;
                 // check if it conflicts with each section of the second variable
-                for (int n = 0; n < courseActivities.get(1).getSections().size(); n++){
+                for (int n = 0; n < courseActivities.get(index_y).getSections().size(); n++){
                     if (vars[1].contains(n)){
-                        if (!s1.hasTimeConflict(courseActivities.get(1).getSections().get(n))){
+                        if (!s1.hasTimeConflict(courseActivities.get(index_y).getSections().get(n))){
                             hasPossibleSolution = true;
                         }
                     }
@@ -54,13 +51,13 @@ public class NoTimeConflict extends Propagator<IntVar> {
         }
 
         // do the same for the second variable
-        for(int b = 0; b < courseActivities.get(1).getSections().size(); b++){
+        for(int b = 0; b < courseActivities.get(index_y).getSections().size(); b++){
             if (vars[1].contains(b)){
-                Section s2 = courseActivities.get(1).getSections().get(b);
+                Section s2 = courseActivities.get(index_y).getSections().get(b);
                 boolean hasPossibleSolution = false;
-                for (int n = 0; n < courseActivities.get(0).getSections().size(); n++){
+                for (int n = 0; n < courseActivities.get(index_x).getSections().size(); n++){
                     if (vars[0].contains(n)){
-                        if (!s2.hasTimeConflict(courseActivities.get(0).getSections().get(n))){
+                        if (!s2.hasTimeConflict(courseActivities.get(index_x).getSections().get(n))){
                             hasPossibleSolution = true;
                         }
                     }
