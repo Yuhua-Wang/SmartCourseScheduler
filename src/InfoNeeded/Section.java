@@ -18,7 +18,7 @@ public class Section {
 
 //Constructor
     public Section(){
-
+        classTimes = new ArrayList<>();
     }
 
     public Section(String title, Activity actType, String prof, Term term, String url) {

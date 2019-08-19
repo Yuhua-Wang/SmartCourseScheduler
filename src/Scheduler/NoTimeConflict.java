@@ -30,6 +30,8 @@ public class NoTimeConflict extends Propagator<IntVar> {
     // remove a section which conflict which all sections of the other variable
     public void propagate(int i) throws ContradictionException {
 
+        // TODO: something wrong here, how do the program check the third and onward variables? ca.get(0) and ca.get(1) always work on the first 2 variables...
+
         for(int a = 0; a < courseActivities.get(0).getSections().size(); a++){
             // first check if a is in the domain of the first variable
             if (vars[0].contains(a)){
@@ -37,9 +39,11 @@ public class NoTimeConflict extends Propagator<IntVar> {
                 Section s1 = courseActivities.get(0).getSections().get(a);
                 boolean hasPossibleSolution = false;
                 // check if it conflicts with each section of the second variable
-                for (Section s2 : courseActivities.get(1)){
-                    if (!s1.hasTimeConflict(s2)){
-                        hasPossibleSolution = true;
+                for (int n = 0; n < courseActivities.get(1).getSections().size(); n++){
+                    if (vars[1].contains(n)){
+                        if (!s1.hasTimeConflict(courseActivities.get(1).getSections().get(n))){
+                            hasPossibleSolution = true;
+                        }
                     }
                 }
                 // remove this section/value from the domain if it conflicts with each section of the second variable
@@ -54,9 +58,11 @@ public class NoTimeConflict extends Propagator<IntVar> {
             if (vars[1].contains(b)){
                 Section s2 = courseActivities.get(1).getSections().get(b);
                 boolean hasPossibleSolution = false;
-                for (Section s1 : courseActivities.get(0)){
-                    if (!s2.hasTimeConflict(s2)){
-                        hasPossibleSolution = true;
+                for (int n = 0; n < courseActivities.get(0).getSections().size(); n++){
+                    if (vars[0].contains(n)){
+                        if (!s2.hasTimeConflict(courseActivities.get(0).getSections().get(n))){
+                            hasPossibleSolution = true;
+                        }
                     }
                 }
                 if (!hasPossibleSolution){

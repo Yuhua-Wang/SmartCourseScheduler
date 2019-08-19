@@ -29,17 +29,23 @@ public class Scheduler {
         }
 
         // add the constraint between each pair of variable
-        for (int i = 0; i<size; i++){
-            for (int j = i;j<size; j++){
+        for (int i = 0; i<size-1; i++){
+            for (int j = i+1;j<size; j++){
                 Constraint c = new Constraint("NoTimeConflict", new NoTimeConflict(cas[i],cas[j],courseActivities));
-                c.post();
+                model.post(c);
             }
         }
 
-        model.getSolver().solve();
-        for (int i = 0; i < cas.length; i++){
-            System.out.println(cas[i]);
+        if (model.getSolver().solve()){
+            for (int i = 0; i < cas.length; i++){
+                System.out.println(cas[i]);
+            }
+        } else {
+            System.out.println("No Possible Schedule exists");
         }
+
+
+
         //TODO: return Sections
         //TODO: how to get all solutions?
 
