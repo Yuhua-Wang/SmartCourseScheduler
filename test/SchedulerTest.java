@@ -182,7 +182,7 @@ import java.time.LocalTime;
        s5.addClassTime(ct5_3);
        ca3.getSections().add(s5);
        // S6: TERM 2
-       Section s6 = new Section("S5", LECTURE, "Bowen", TERM_2, "");
+       Section s6 = new Section("S6", LECTURE, "Bowen", TERM_2, "");
        ClassTime ct6 = new ClassTime(MONDAY, st5, et5);
        s6.addClassTime(ct6);
        ca3.getSections().add(s6);

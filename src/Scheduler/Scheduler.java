@@ -21,42 +21,44 @@ public class Scheduler {
 
     // input: nothing, output: a list of sections chosen representing a solution
     // values of each variable represent sections (each is an index for Sections field in CourseActivities)
-    public ArrayList<Section> generateSchedule(){
+    public ArrayList<ArrayList<Section>> generateSchedule(){
         Model model = new Model("Scheduler");
 
         //generate a variable for each CourseActivity
-        IntVar[] cas = new IntVar[size];
+        IntVar[] caVars = new IntVar[size];
         for (int i = 0; i<size; i++){
-            cas[i] = model.intVar("CA_"+i,0,courseActivities.get(i).getSections().size()-1);
+            caVars[i] = model.intVar("CA_"+i,0,courseActivities.get(i).getSections().size()-1);
         }
 
         // add the constraint between each pair of variable
         for (int i = 0; i<size-1; i++){
             for (int j = i+1;j<size; j++){
-                Constraint c = new Constraint("NoTimeConflict", new NoTimeConflict(cas[i],cas[j],courseActivities));
+                Constraint c = new Constraint("NoTimeConflict", new NoTimeConflict(caVars[i],caVars[j],courseActivities));
                 model.post(c);
             }
         }
 
+        ArrayList<ArrayList<Section>> timetables = new ArrayList<>();
         List<Solution> solutions = model.getSolver().findAllSolutions();
         long solutionCount = model.getSolver().getSolutionCount();
         if (solutionCount != 0){
             System.out.println(solutionCount + " Solutions Found");
             for (Solution s : solutions) {
+                ArrayList<Section> timetable = new ArrayList<>();
                 System.out.println(" ---------------------------- ");
-                for (int i = 0; i<cas.length; i++){
-                    System.out.println(s.getIntVal(cas[i]));
+                for (int i = 0; i<caVars.length; i++){
+                    timetable.add(courseActivities.get(i).getSections().get(s.getIntVal(caVars[i])));
+                    //System.out.println(s.getIntVal(caVars[i]));
+                    //System.out.println(courseActivities.get(i).getSections().get(s.getIntVal(caVars[i])));
                 }
+
+                timetables.add(timetable);
             }
         } else {
             System.out.println("No Possible Schedule exists");
         }
 
-
-
-        //TODO: return Sections
-
-        return null;
+        return timetables;
     }
 
     public ArrayList<CourseActivity> getCourseActivities() {
