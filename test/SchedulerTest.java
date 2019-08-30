@@ -1,18 +1,18 @@
 import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
 import Scheduler.Scheduler;
-import Support.Activity;
 import Support.ClassTime;
-import Support.Term;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import static Support.Activity.*;
-import static Support.Term.*;
-import static java.time.DayOfWeek.*;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
+
+import static Support.Activity.LABORATORY;
+import static Support.Activity.LECTURE;
+import static Support.Term.TERM_1;
+import static Support.Term.TERM_2;
+import static java.time.DayOfWeek.*;
 
  class SchedulerTest {
     private ArrayList<CourseActivity> cas;
@@ -24,12 +24,12 @@ import java.time.LocalTime;
 
     @Test
      void SimpleNoConflictPossible(){
-        Section s1 = new Section("S1", LAB, "Bowen", TERM_1, "");
+        Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "");
         LocalTime st1 = LocalTime.of(9,15);
         LocalTime et1 = LocalTime.of(10,15);
         ClassTime ct1 = new ClassTime(MONDAY, st1, et1);
         s1.addClassTime(ct1);
-        CourseActivity ca1 = new CourseActivity("CA1", LAB);
+        CourseActivity ca1 = new CourseActivity("CA1", LABORATORY);
         ca1.getSections().add(s1);
         Section s3 = new Section("S3", LECTURE, "Bowen", TERM_1, "");
         LocalTime st3 = LocalTime.of(14,15);
@@ -54,9 +54,9 @@ import java.time.LocalTime;
 
     @Test
      void mediumLevelImpossible(){
-        CourseActivity ca1 = new CourseActivity("CA1", LAB);
+        CourseActivity ca1 = new CourseActivity("CA1", LABORATORY);
         // S1: MON WED FRI 9:15-10:15 TERM 1
-        Section s1 = new Section("S1", LAB, "Bowen", TERM_1, "");
+        Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "");
         LocalTime st1 = LocalTime.of(9,15);
         LocalTime et1 = LocalTime.of(10,15);
         ClassTime ct1 = new ClassTime(MONDAY, st1, et1);
@@ -67,7 +67,7 @@ import java.time.LocalTime;
         s1.addClassTime(ct1_3);
         ca1.getSections().add(s1);
         // S2 : TUE FRI 9:30-10:30
-        Section s2 = new Section("S2", LAB, "Bowen", TERM_1, "");
+        Section s2 = new Section("S2", LABORATORY, "Bowen", TERM_1, "");
         LocalTime st2 = LocalTime.of(9,30);
         LocalTime et2 = LocalTime.of(12,30);
         ClassTime ct2 = new ClassTime(TUESDAY, st2, et2);
@@ -123,9 +123,9 @@ import java.time.LocalTime;
 
     @Test
     void multipleSolutions(){
-       CourseActivity ca1 = new CourseActivity("CA1", LAB);
+       CourseActivity ca1 = new CourseActivity("CA1", LABORATORY);
        // S1: MON WED FRI 9:15-10:15 TERM 1
-       Section s1 = new Section("S1", LAB, "Bowen", TERM_1, "");
+       Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "");
        LocalTime st1 = LocalTime.of(9,15);
        LocalTime et1 = LocalTime.of(10,15);
        ClassTime ct1 = new ClassTime(MONDAY, st1, et1);
@@ -136,7 +136,7 @@ import java.time.LocalTime;
        s1.addClassTime(ct1_3);
        ca1.getSections().add(s1);
        // S2 : TUE FRI 9:30-10:30
-       Section s2 = new Section("S2", LAB, "Bowen", TERM_1, "");
+       Section s2 = new Section("S2", LABORATORY, "Bowen", TERM_1, "");
        LocalTime st2 = LocalTime.of(9,30);
        LocalTime et2 = LocalTime.of(12,30);
        ClassTime ct2 = new ClassTime(TUESDAY, st2, et2);
