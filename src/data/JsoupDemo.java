@@ -88,8 +88,7 @@ public class JsoupDemo {
                 e.printStackTrace();
             }
             mySection.setTerm(YEAR_TERM);
-            String activityType = result.get(k).child(2).text().toUpperCase();
-            mySection.setActType(Activity.valueOf(activityType));
+            setActivity(mySection,k);
             list.add(mySection);
         }
         return list;
@@ -105,8 +104,7 @@ public class JsoupDemo {
                 } else {
                     mySection.setTerm(TERM_2);
                 }
-                String activityType = result.get(i).child(2).text().toUpperCase();
-                mySection.setActType(Activity.valueOf(activityType));
+                setActivity(mySection,i);
                 System.out.println(mySection.getActType());
                 list.add(mySection);
             } catch (Exception e) {
@@ -140,6 +138,11 @@ public class JsoupDemo {
         String thisDay = body.get(1).child(1).text();
         //System.out.println(thisDay);
         return thisDay;
+    }
+
+    public void setActivity(Section section, int i){
+        String activityType = result.get(i).child(2).text().toUpperCase();
+        section.setActType(Activity.valueOf(activityType));
     }
 
 //    public String findProf(String url, String sectionNum) throws IOException {
