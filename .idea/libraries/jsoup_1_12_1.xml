@@ -2,6 +2,7 @@
   <library name="jsoup-1.12.1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/jsoup-1.12.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/choco-solver-4.10.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

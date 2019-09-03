@@ -1,23 +1,33 @@
-import Support.ClassTime;
+import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solution;
+import org.chocosolver.solver.variables.IntVar;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.time.*;
-import static java.time.DayOfWeek.*;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
-import org.jsoup.select.Elements;
+import java.util.List;
 
 
 public class For_Eyeballing {
     public static void main(String[] args) {
-        String url = "https://slacknotes.com/grades/CPSC210?Professor=baniassad,%20elisa;eiselt,%20kurt";
-        try {
-            Document doc = Jsoup.connect(url).get();
-            Elements averageBlock = doc.getElementsByClass("class-header-info center");
-            System.out.println(averageBlock);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Model model = new Model("testing");
+
+        IntVar x = model.intVar("X",1,5);
+        IntVar y = model.intVar("Y",new int[]{3,2,4,7});
+        IntVar z = model.intVar("Z", 2,4);
+
+        model.arithm(x,"=",y).post();
+        model.arithm(y,"=",z).post();
+        model.arithm(x,"=",z).post();
+
+        List<Solution> s = model.getSolver().findAllSolutions();
+        long a = model.getSolver().getSolutionCount();
+        System.out.println(a);
+        System.out.println(s.get(1).getIntVal(x));
+        System.out.println(s.get(1).getIntVal(y));
+        System.out.println(s.get(1).getIntVal(z));
+
     }
 }
 

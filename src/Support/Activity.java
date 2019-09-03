@@ -3,7 +3,7 @@ package Support;
 // represents activity types (e.g. lectures, labs, tutorials)
 public enum Activity {
     LECTURE,
-    LAB,
+    LABORATORY,
     TUTORIAL,
     WAITLIST,
     SEMINAR,
