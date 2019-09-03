@@ -2,6 +2,7 @@ package data;
 
 import InfoNeeded.Section;
 import Support.Activity;
+import Support.ClassTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,8 +21,7 @@ public class JsoupDemo {
     private String type;
     private String day;
     private String courseTitle;
-    private int startingTime;
-    private int endingTime;
+    private ClassTime classTime;
     private String comments;
     private Elements temp1;
     private Elements temp2;
@@ -105,7 +105,9 @@ public class JsoupDemo {
                     mySection.setTerm(TERM_2);
                 }
                 setActivity(mySection,i);
-                System.out.println(mySection.getActType());
+               // System.out.println(mySection.getActType());
+                String dayOfWeek = result.get(i).child(5).text();
+                System.out.println(dayOfWeek);
                 list.add(mySection);
             } catch (Exception e) {
                 i--;
