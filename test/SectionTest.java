@@ -175,6 +175,5 @@ public class SectionTest {
         s2.addClassTime(c2);
         s2.addClassTime(c3);
         assertTrue(s1.hasTimeConflict(s2));
-
     }
 }
