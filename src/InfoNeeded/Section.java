@@ -77,6 +77,10 @@ public class Section {
         return actType;
     }
 
+    public ArrayList<ClassTime> getClassTime(){
+        return classTimes;
+    }
+
     public String getProf() {
         return prof;
     }

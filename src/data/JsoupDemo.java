@@ -9,6 +9,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,11 +23,14 @@ public class JsoupDemo {
     private String type;
     private String day;
     private String courseTitle;
-    private ClassTime classTime;
+    private ArrayList<ClassTime> classTime;
     private String comments;
     private Elements temp1;
     private Elements temp2;
     Elements result;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private DayOfWeek dayOfWeek;
 
     public void dataScraping(String url) {
         myURL = url;
@@ -95,6 +100,8 @@ public class JsoupDemo {
     }
 
     public ArrayList termCourse(ArrayList<Section> list) {
+        classTime = new ArrayList<>();
+
         for (int i = 0; i < result.size(); i++) {
             try {
                 Section mySection = setSection(i);
@@ -105,9 +112,21 @@ public class JsoupDemo {
                     mySection.setTerm(TERM_2);
                 }
                 setActivity(mySection,i);
-               // System.out.println(mySection.getActType());
+
+                //TODO:
+                // wildcard characters such as APSC182, two labs should have no time conflicts,
+                // need to come back for that
+
                 String dayOfWeek = result.get(i).child(5).text();
-                System.out.println(dayOfWeek);
+                String[] weekDays = dayOfWeek.split(" ");
+                for(int k=0; k<weekDays.length; k++) {
+                    String[] startHr = result.get(i).child(6).text().split(":");
+                    String[] endHr = result.get(i).child(7).text().split(":");
+                    startTime = LocalTime.of(Integer.parseInt(startHr[0]), Integer.parseInt(startHr[1]));
+                    endTime = LocalTime.of(Integer.parseInt(endHr[0]), Integer.parseInt(endHr[1]));
+                    mySection.addClassTime(createClassTime(weekDays[k],startTime,endTime));
+                }
+                System.out.println(mySection.getClassTime());
                 list.add(mySection);
             } catch (Exception e) {
                 i--;
@@ -122,9 +141,7 @@ public class JsoupDemo {
         String curString = result.get(index).child(1).text();
         mySection.setTitle((curString + " ").split(" ")[2]);
         mySection.setProfURL(profURL);
-       // profName = findProf(profURL, mySection.getTitle());
         day = findDay(mySection.getTitle());
-      //  mySection.setProf(profName);
         return mySection;
     }
 
@@ -138,13 +155,31 @@ public class JsoupDemo {
         Document dc = Jsoup.connect(profURL + sectionNum).get();
         Elements body = dc.select(".table.table-striped tr");
         String thisDay = body.get(1).child(1).text();
-        //System.out.println(thisDay);
         return thisDay;
     }
 
     public void setActivity(Section section, int i){
         String activityType = result.get(i).child(2).text().toUpperCase();
         section.setActType(Activity.valueOf(activityType));
+    }
+
+    public ClassTime createClassTime(String day, LocalTime start, LocalTime end){
+        day.trim().replaceAll(" +", " ");
+        if (day.contains("M")){
+            return new ClassTime(DayOfWeek.MONDAY,start,end);
+        } else if (day.contains("T")&&day.contains("e")){
+            return new ClassTime(DayOfWeek.TUESDAY,start,end);
+        } else if (day.contains("W")){
+            return new ClassTime(DayOfWeek.WEDNESDAY,start,end);
+        } else if (day.contains("T")&&day.contains("h")){
+            return new ClassTime(DayOfWeek.THURSDAY,start,end);
+        } else if (day.contains("F")){
+            return new ClassTime(DayOfWeek.FRIDAY,start,end);
+        } else if (day.contains("S")&&day.contains("a")){
+            return new ClassTime(DayOfWeek.SATURDAY,start,end);
+        } else {
+            return new ClassTime(DayOfWeek.SUNDAY,start,end);
+        }
     }
 
 //    public String findProf(String url, String sectionNum) throws IOException {
