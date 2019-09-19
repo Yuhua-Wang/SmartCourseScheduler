@@ -1,14 +1,18 @@
 import Support.*;
+import UI.MenuWindow;
+
+import java.io.IOException;
 
 
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("hello world");
-        ClassTime t = new ClassTime();
+       try{
+           new MenuWindow();
+       } catch (IOException e){
 
-
+       }
 
     }
 }
