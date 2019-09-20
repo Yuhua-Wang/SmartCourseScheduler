@@ -31,10 +31,7 @@ public class MenuWindow extends UI {
             frame.dispose();
         }
         else  if(e.getActionCommand().equals("Exit")){
-            if (JOptionPane.showConfirmDialog(frame, "Do you ready want to close the program?\n" + " Unsaved schedule will be lost",
-                    "Exit?", YES_NO_OPTION, QUESTION_MESSAGE) == 0){
-                System.exit(0);
-            }
+            confirmExit();
         }
     }
 }

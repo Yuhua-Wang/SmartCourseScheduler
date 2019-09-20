@@ -3,10 +3,11 @@ package UI;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.io.IOException;
+
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 public abstract class UI implements ActionListener {
     protected JFrame frame;
@@ -32,10 +33,16 @@ public abstract class UI implements ActionListener {
         frame.setLocation(500,500);
         frame.getContentPane().setBackground(Color.WHITE );
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(true);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                confirmExit();
+            }
+        });
     }
 
     protected void initializeTextArea(){
@@ -112,6 +119,13 @@ public abstract class UI implements ActionListener {
         determineDimension(frame, textField, x, y,width,height);
 
         return textField;
+    }
+
+    protected void confirmExit(){
+        if (JOptionPane.showConfirmDialog(frame, "Do you ready want to close the program?\n" + " Unsaved schedule will be lost",
+                "Exit?", YES_NO_OPTION, QUESTION_MESSAGE) == 0){
+            System.exit(0);
+        }
     }
 
     protected abstract void initializeButton();
