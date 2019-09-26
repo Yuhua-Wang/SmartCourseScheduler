@@ -26,6 +26,7 @@ public class TimeTableWindow extends UI {
     private JScrollPane newTable(){
         String[] columnNames = { " ", "Mon", "Tue", "Wed", "Thu", "Fri" };
         final DefaultTableModel model = new DefaultTableModel(new String[][]{}, columnNames);
+        
         for (int i=0; i<30; i++){
             String time;
             if (i%2==0 && i<6){
@@ -40,6 +41,7 @@ public class TimeTableWindow extends UI {
             String[] rowData = { time, "", "", "", "", "" };
             model.addRow(rowData);
         }
+
         JTable table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         frame.add(scrollPane);
