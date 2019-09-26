@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class For_Eyeballing extends JFrame {
     public static void main(String[] args) throws IOException {
-        new MenuWindow();
+        new TimeTableWindow();
     }
 
 }

@@ -18,6 +18,8 @@ public abstract class UI implements ActionListener {
     private int buttonWidth = 400;
 
     public UI() throws IOException {
+        initializeFrame();
+        initializeDialog();
         initialize();
     }
 
@@ -84,7 +86,7 @@ public abstract class UI implements ActionListener {
     // x_pos, y_pos are NOT coordinates. They mean which part on the frame should the center of the component be at.
     // width and height are NOT the component's actual width and height. They mean what portion of the frame's x y should the component occupy
     // e.g. x_pos = 0.5, y_pos = 0.5 means the button should be at the center of the screen
-    private void setLocation(JFrame frame, JComponent component, Double x_pos, Double y_pos, Double width, Double height){
+    protected void setLocation(JFrame frame, JComponent component, Double x_pos, Double y_pos, Double width, Double height){
         int[] dimension = determineDimention(frame, component, x_pos, y_pos, width, height);
         component.setBounds(dimension[0], dimension[1], dimension[2], dimension[3]);
         frame.addComponentListener( new ComponentAdapter() {
