@@ -11,10 +11,15 @@ public class TimeTableWindow extends UI {
         super();
     }
 
+    @Override
+    protected void initialize() {
+
+    }
+
     private void initializeTable(){
 
     }
-    @Override
+
     protected void initializeButton() {
 
     }

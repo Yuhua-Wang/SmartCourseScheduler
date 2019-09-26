@@ -21,11 +21,7 @@ public abstract class UI implements ActionListener {
         initialize();
     }
 
-    private  void  initialize(){
-        initializeFrame();
-        initializeButton();
-        initializeDialog();
-    }
+    protected abstract void  initialize();
 
 
     protected  void initializeFrame() {
@@ -137,5 +133,5 @@ public abstract class UI implements ActionListener {
         }
     }
 
-    protected abstract void initializeButton();
+    //protected abstract void initializeButton();
 }
