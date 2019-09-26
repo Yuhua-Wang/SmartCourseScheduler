@@ -129,6 +129,8 @@ public abstract class UI implements ActionListener {
     }
 
     protected void confirmExit(){
+        //TODO: remove the line below after testing
+        System.exit(0);
         if (JOptionPane.showConfirmDialog(frame, "Do you ready want to close the program?\n" + " Unsaved schedule will be lost",
                 "Exit?", YES_NO_OPTION, QUESTION_MESSAGE) == 0){
             System.exit(0);

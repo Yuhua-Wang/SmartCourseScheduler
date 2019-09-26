@@ -20,14 +20,32 @@ public class TimeTableWindow extends UI {
     }
 
     private void initializeTable(){
-        Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3" },
-                { "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
-        Object columnNames[] = { "Column One", "Column Two", "Column Three" };
-        JTable table = new JTable(rowData, columnNames);
+        newTable();
+    }
 
+    private JScrollPane newTable(){
+        String[] columnNames = { " ", "Mon", "Tue", "Wed", "Thu", "Fri" };
+        final DefaultTableModel model = new DefaultTableModel(new String[][]{}, columnNames);
+        for (int i=0; i<30; i++){
+            String time;
+            if (i%2==0 && i<6){
+                time = "0"+ (7+i/2) + ":" + "00";
+            } else if (i%2==0){
+                time = (7+i/2) + ":" + "00";
+            } else if (i<6){
+                time = "0" + (7+i/2) + ":" + "30";
+            } else {
+                time = (7+i/2) + ":" + "30";
+            }
+            String[] rowData = { time, "", "", "", "", "" };
+            model.addRow(rowData);
+        }
+        JTable table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         frame.add(scrollPane);
-        setLocation(frame, scrollPane, 0.5, 0.5, 0.5, 0.5);
+        setLocation(frame, scrollPane, 0.5, 0.5, 0.8, 0.63);
+
+        return scrollPane;
     }
 
     protected void initializeButton() {
