@@ -18,14 +18,13 @@ public abstract class UI implements ActionListener {
     private int buttonWidth = 400;
 
     public UI() throws IOException {
+        initializeFrame();
+        initializeDialog();
         initialize();
     }
 
-    private  void  initialize(){
-        initializeFrame();
-        initializeButton();
-        initializeDialog();
-    }
+    protected abstract void  initialize();
+
 
     protected  void initializeFrame() {
         frame = new JFrame("Simple Todo List");
@@ -76,7 +75,7 @@ public abstract class UI implements ActionListener {
         button.setBackground(Color.WHITE);
         button.setOpaque(true);
         frame.add(button);
-        determineDimension(frame, button, x_pos, y_pos, width, height);
+        setLocation(frame, button, x_pos, y_pos, width, height);
         //allowResize(frame, button, x_pos, y_pos, width, height);
 
         return button;
@@ -87,27 +86,35 @@ public abstract class UI implements ActionListener {
     // x_pos, y_pos are NOT coordinates. They mean which part on the frame should the center of the component be at.
     // width and height are NOT the component's actual width and height. They mean what portion of the frame's x y should the component occupy
     // e.g. x_pos = 0.5, y_pos = 0.5 means the button should be at the center of the screen
-    private void determineDimension(JFrame frame, JComponent component, Double x_pos, Double y_pos, Double width, Double height){
+    protected void setLocation(JFrame frame, JComponent component, Double x_pos, Double y_pos, Double width, Double height){
+        int[] dimension = determineDimention(frame, component, x_pos, y_pos, width, height);
+        component.setBounds(dimension[0], dimension[1], dimension[2], dimension[3]);
         frame.addComponentListener( new ComponentAdapter() {
             @Override
             public void componentResized( ComponentEvent e ) {
-                int[] dimension = new int[4];
-                int frameWidth = (int) Math.round(frame.getBounds().getWidth());
-                int frameHeight = (int) Math.round(frame.getBounds().getHeight());
-                dimension[2] = (int) Math.round(frameWidth * width);
-                dimension[3] = (int) Math.round(frameHeight * height);
-                dimension[0] = (int) Math.round(frameWidth*x_pos) - dimension[2]/2;
-                dimension[1] = (int) Math.round(frameHeight*y_pos) - dimension[3]/2;
+                int[] dimension = determineDimention(frame, component, x_pos, y_pos, width, height);
                 component.setBounds(dimension[0], dimension[1], dimension[2], dimension[3]);
             }
         } );
+    }
+
+    // dimension[0] = x coordinate, dimension[1] = y coordinate, [2] =width, [3] = height
+    protected int[] determineDimention(JFrame frame, JComponent component, Double x_pos, Double y_pos, Double width, Double height) {
+     int[] dimension = new int[4];
+     int frameWidth = (int) Math.round(frame.getBounds().getWidth());
+     int frameHeight = (int) Math.round(frame.getBounds().getHeight());
+     dimension[2] = (int) Math.round(frameWidth * width);
+     dimension[3] = (int) Math.round(frameHeight * height);
+     dimension[0] = (int) Math.round(frameWidth*x_pos) - dimension[2]/2;
+     dimension[1] = (int) Math.round(frameHeight*y_pos) - dimension[3]/2;
+     return dimension;
     }
 
     protected JLabel createLabel(String label, Double x, Double y,Double width, Double height, int size){
         JLabel jLabel = new JLabel(label);
         jLabel.setFont(new Font("Serif",Font.PLAIN,size));
         frame.add(jLabel);
-        determineDimension(frame, jLabel, x, y,width,height);
+        setLocation(frame, jLabel, x, y,width,height);
 
         return jLabel;
     }
@@ -116,17 +123,19 @@ public abstract class UI implements ActionListener {
         JTextField textField = new JTextField(text);
         textField.setFont(new Font("Serif",Font.PLAIN,size));
         frame.add(textField);
-        determineDimension(frame, textField, x, y,width,height);
+        setLocation(frame, textField, x, y,width,height);
 
         return textField;
     }
 
     protected void confirmExit(){
+        //TODO: remove the line below after testing
+        System.exit(0);
         if (JOptionPane.showConfirmDialog(frame, "Do you ready want to close the program?\n" + " Unsaved schedule will be lost",
                 "Exit?", YES_NO_OPTION, QUESTION_MESSAGE) == 0){
             System.exit(0);
         }
     }
 
-    protected abstract void initializeButton();
+    //protected abstract void initializeButton();
 }
