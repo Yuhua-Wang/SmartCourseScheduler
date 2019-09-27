@@ -13,6 +13,7 @@ public class MenuWindow extends UI {
 
     public MenuWindow() throws IOException {
         super();
+        initializeLabel();
         frame.setSize(frameWidth,frameHeight);
     }
 
@@ -27,6 +28,10 @@ public class MenuWindow extends UI {
     protected void initializeButton() {
         JButton start = createButton("Start",0.5, 0.4, 0.5,  0.2);
         JButton exit = createButton("Exit",0.5,0.7, 0.5, 0.2);
+
+    }
+
+    protected void initializeLabel(){
         JLabel welcome = createLabel("SmartScheluler For UBC", 0.55, 0.1, 0.5, 0.1, 30);
         //JTextField welcome = createTextField("SmartScheluler For UBC", 0.5, 0.1, 0.5, 0.1, 30);
     }
@@ -34,7 +39,11 @@ public class MenuWindow extends UI {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Start")){
-            JOptionPane.showMessageDialog(null, "!!! Segmentation Fault (Core Dumped) !!!");
+            try {
+                new InputWindow();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             frame.dispose();
         }
         else  if(e.getActionCommand().equals("Exit")){

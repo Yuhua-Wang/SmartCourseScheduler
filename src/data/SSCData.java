@@ -43,7 +43,7 @@ public class SSCData {
             //get course title
             courseTitle = doc.title().split("-")[0];
 
-            // interleaving two sections from online html,
+            // interleaving two sections from online,
             // after this step all sections of a course would be listed in order
             temp1 = doc.select(".section1");
             temp2 = doc.select(".section2");
