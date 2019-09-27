@@ -23,8 +23,32 @@ public abstract class UI implements ActionListener {
         initialize();
     }
 
+    public UI(int width, int height, int x, int y) throws IOException {
+        initializeFrame(width, height, x, y);
+        initializeDialog();
+        initialize();
+    }
+
     protected abstract void  initialize();
 
+
+    protected  void initializeFrame(int width, int height, int x, int y) {
+        frame = new JFrame("Simple Todo List");
+        frame.setSize(width,height);
+        frame.setLocation(x,y);
+        frame.getContentPane().setBackground(Color.WHITE );
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setResizable(true);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                confirmExit();
+            }
+        });
+    }
 
     protected  void initializeFrame() {
         frame = new JFrame("Simple Todo List");
