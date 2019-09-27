@@ -137,6 +137,7 @@ public class SSCData {
         }
         }
         courseActivities = findNumActType(list);
+        System.out.println(courseActivities.get(0).getActivity());
         return courseActivities;
     }
 
@@ -161,20 +162,20 @@ public class SSCData {
             set.add(list.get(i).getActType());
         }
         CourseActivity courseActivity1 = new CourseActivity(name,list.get(0).getActType());
-        courseActivity1.addSections(list.get(0));
+        courseActivity1.addSection(list.get(0));
         courseActivities.add(courseActivity1);
         set.remove(list.get(0).getActType());
         for (int a=1; a<numSections; a++){
             if (!set.contains(list.get(a).getActType())){
                 for (int b=0; b<courseActivities.size(); b++){
                     if (courseActivities.get(b).getActivity()==list.get(a).getActType()){
-                        courseActivities.get(b).addSections(list.get(a));
+                        courseActivities.get(b).addSection(list.get(a));
                     }
                 }
             }
             else{
                 CourseActivity courseActivity2 = new CourseActivity(name,list.get(a).getActType());
-                courseActivity2.addSections(list.get(a));
+                courseActivity2.addSection(list.get(a));
                 courseActivities.add(courseActivity2);
                 set.remove(list.get(a).getActType());
             }

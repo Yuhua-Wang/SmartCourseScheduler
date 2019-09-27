@@ -31,14 +31,10 @@ public class Course implements Iterable<Section> {
         this.title = title;
     }
 
-
-
-    public void addSection( Section section){
+    public void addSection(Section section){
         sections.add(section);
-        if (section.getCourse() != this){
-            section.setCourse(this);
-        }
     }
+
 
     public String getTitle() {
         return title;

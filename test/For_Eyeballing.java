@@ -1,14 +1,11 @@
 
 
 import InfoNeeded.Section;
-import Support.Activity;
 import Support.ClassTime;
-import Support.Term;
-import UI.MenuWindow;
 import UI.TimeTableWindow;
+
 import javax.swing.*;
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -19,7 +16,7 @@ import static java.time.DayOfWeek.*;
 
 public class For_Eyeballing extends JFrame {
     public static void main(String[] args) throws IOException {
-        Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "");
+        Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "", "CPSC110");
         LocalTime st1 = LocalTime.of(9,15);
         LocalTime et1 = LocalTime.of(10,15);
         ClassTime ct1 = new ClassTime(MONDAY, st1, et1);

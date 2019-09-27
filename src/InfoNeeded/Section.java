@@ -48,13 +48,6 @@ public class Section {
         return false;
     }
 
-    public void setCourse(Course course){
-        this.course = course;
-        if (!course.getSections().contains(this)){
-            course.addSection(this);
-        }
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
