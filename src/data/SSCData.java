@@ -1,5 +1,6 @@
 package data;
 
+import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
 import Support.Activity;
 import Support.ClassTime;
@@ -12,11 +13,12 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import static Support.Term.*;
 
-public class JsoupDemo {
+public class SSCData {
 
     private String myURL;
     private String profURL;
@@ -31,6 +33,7 @@ public class JsoupDemo {
     private LocalTime startTime;
     private LocalTime endTime;
     private DayOfWeek dayOfWeek;
+    private ArrayList<CourseActivity> courseActivities;
 
     public void dataScraping(String url) {
         myURL = url;
@@ -101,7 +104,6 @@ public class JsoupDemo {
 
     public ArrayList termCourse(ArrayList<Section> list) {
         classTime = new ArrayList<>();
-
         for (int i = 0; i < result.size(); i++) {
             try {
                 Section mySection = setSection(i);
@@ -126,13 +128,17 @@ public class JsoupDemo {
                     endTime = LocalTime.of(Integer.parseInt(endHr[0]), Integer.parseInt(endHr[1]));
                     mySection.addClassTime(createClassTime(weekDays[k],startTime,endTime));
                 }
-                System.out.println(mySection.getClassTime());
-                list.add(mySection);
+               // created a list of sections of a course, with different properties
+                if (mySection.getActType() != Activity.WAITINGLIST) {
+                    list.add(mySection);
+                }
             } catch (Exception e) {
-                i--;
-            }
+            i--;
         }
-        return list;
+        }
+        courseActivities = findNumActType(list);
+        System.out.println(courseActivities.get(0).getActivity());
+        return courseActivities;
     }
 
     public Section setSection(int index) throws Exception {
@@ -140,9 +146,41 @@ public class JsoupDemo {
         Section mySection = new Section();
         String curString = result.get(index).child(1).text();
         mySection.setTitle((curString + " ").split(" ")[2]);
+        mySection.setCourseName((curString + " ").split(" ")[0]+" "+(curString + " ").split(" ")[1]);
+        //System.out.println(mySection.getCourseName());
         mySection.setProfURL(profURL);
         day = findDay(mySection.getTitle());
         return mySection;
+    }
+
+    public ArrayList<CourseActivity> findNumActType(ArrayList<Section> list){
+        ArrayList<CourseActivity> courseActivities = new ArrayList<>();
+        String name = list.get(0).getCourseName();
+        int numSections = list.size();
+        HashSet set = new HashSet();
+        for (int i=0; i<numSections; i++){
+            set.add(list.get(i).getActType());
+        }
+        CourseActivity courseActivity1 = new CourseActivity(name,list.get(0).getActType());
+        courseActivity1.addSection(list.get(0));
+        courseActivities.add(courseActivity1);
+        set.remove(list.get(0).getActType());
+        for (int a=1; a<numSections; a++){
+            if (!set.contains(list.get(a).getActType())){
+                for (int b=0; b<courseActivities.size(); b++){
+                    if (courseActivities.get(b).getActivity()==list.get(a).getActType()){
+                        courseActivities.get(b).addSection(list.get(a));
+                    }
+                }
+            }
+            else{
+                CourseActivity courseActivity2 = new CourseActivity(name,list.get(a).getActType());
+                courseActivity2.addSection(list.get(a));
+                courseActivities.add(courseActivity2);
+                set.remove(list.get(a).getActType());
+            }
+        }
+        return courseActivities;
     }
 
     public String splitURL(String thatURL) {
@@ -159,12 +197,12 @@ public class JsoupDemo {
     }
 
     public void setActivity(Section section, int i){
-        String activityType = result.get(i).child(2).text().toUpperCase();
+        String activityType = result.get(i).child(2).text().toUpperCase().replaceAll("\\s+","");
         section.setActType(Activity.valueOf(activityType));
+      //  System.out.println(section.getActType());
     }
 
     public ClassTime createClassTime(String day, LocalTime start, LocalTime end){
-        day.trim().replaceAll(" +", " ");
         if (day.contains("M")){
             return new ClassTime(DayOfWeek.MONDAY,start,end);
         } else if (day.contains("T")&&day.contains("e")){

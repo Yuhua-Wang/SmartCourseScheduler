@@ -17,6 +17,13 @@ public class MenuWindow extends UI {
     }
 
     @Override
+    protected void initialize() {
+        initializeFrame();
+        initializeButton();
+        initializeDialog();
+    }
+
+
     protected void initializeButton() {
         JButton start = createButton("Start",0.5, 0.4, 0.5,  0.2);
         JButton exit = createButton("Exit",0.5,0.7, 0.5, 0.2);

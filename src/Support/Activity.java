@@ -5,7 +5,7 @@ public enum Activity {
     LECTURE,
     LABORATORY,
     TUTORIAL,
-    WAITLIST,
+    WAITINGLIST,
     SEMINAR,
     DISCUSSION,
     DIRECTED_STUDY,

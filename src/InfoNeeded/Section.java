@@ -15,19 +15,21 @@ public class Section {
     private Term term;
     private ArrayList<ClassTime> classTimes;
     private String url;
+    private String courseName;
 
 //Constructor
     public Section(){
         classTimes = new ArrayList<>();
     }
 
-    public Section(String title, Activity actType, String prof, Term term, String url) {
+    public Section(String title, Activity actType, String prof, Term term, String url, String courseName) {
         this.title = title;
         this.actType = actType;
         this.prof = prof;
         this.term = term;
         this.url = url;
         this.classTimes = new ArrayList<>();
+        this.courseName = courseName;
     }
 
     // return true if the 2 section has time conflict
@@ -47,6 +49,10 @@ public class Section {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setCourseName(String name) {
+        courseName = name;
     }
 
     public void addClassTime(ClassTime ct){
@@ -77,6 +83,10 @@ public class Section {
         return actType;
     }
 
+    public String getCourseName(){
+        return courseName;
+    }
+
     public ArrayList<ClassTime> getClassTime(){
         return classTimes;
     }
@@ -97,4 +107,5 @@ public class Section {
     public String toString() {
         return title;
     }
+    
 }

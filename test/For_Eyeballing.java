@@ -1,33 +1,39 @@
-import org.chocosolver.solver.Model;
-import org.chocosolver.solver.Solution;
-import org.chocosolver.solver.variables.IntVar;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
+
+import InfoNeeded.Section;
+import Support.Activity;
+import Support.ClassTime;
+import Support.Term;
+import UI.MenuWindow;
+import UI.TimeTableWindow;
+import javax.swing.*;
 import java.io.IOException;
-import java.util.List;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
+import static Support.Activity.LABORATORY;
+import static Support.Term.TERM_1;
+import static java.time.DayOfWeek.*;
 
 
-public class For_Eyeballing {
-    public static void main(String[] args) {
-        Model model = new Model("testing");
+public class For_Eyeballing extends JFrame {
+    public static void main(String[] args) throws IOException {
+        Section s1 = new Section("S1A", LABORATORY, "Bowen", TERM_1, "", "Test 110");
+        LocalTime st1 = LocalTime.of(9,15);
+        LocalTime et1 = LocalTime.of(10,15);
+        ClassTime ct1 = new ClassTime(MONDAY, st1, et1);
+        s1.addClassTime(ct1);
+        ClassTime ct1_2 = new ClassTime(WEDNESDAY, st1, et1);
+        s1.addClassTime(ct1_2);
+        ClassTime ct1_3 = new ClassTime(FRIDAY, st1, et1);
+        s1.addClassTime(ct1_3);
 
-        IntVar x = model.intVar("X",1,5);
-        IntVar y = model.intVar("Y",new int[]{3,2,4,7});
-        IntVar z = model.intVar("Z", 2,4);
-
-        model.arithm(x,"=",y).post();
-        model.arithm(y,"=",z).post();
-        model.arithm(x,"=",z).post();
-
-        List<Solution> s = model.getSolver().findAllSolutions();
-        long a = model.getSolver().getSolutionCount();
-        System.out.println(a);
-        System.out.println(s.get(1).getIntVal(x));
-        System.out.println(s.get(1).getIntVal(y));
-        System.out.println(s.get(1).getIntVal(z));
-
+        ArrayList<Section> sections = new ArrayList<>();
+        sections.add(s1);
+        TimeTableWindow t = new TimeTableWindow();
+        t.newTable(sections);
     }
+
 }
 

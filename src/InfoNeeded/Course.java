@@ -1,12 +1,10 @@
 package InfoNeeded;
 
 import Support.Activity;
-import data.JsoupDemo;
+import data.SSCData;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 
 //represent a course (not a specific section)
@@ -22,7 +20,7 @@ public class Course implements Iterable<Section> {
     private ArrayList<Activity> requiredActivities;
 
     //JSoupDemo field
-    private JsoupDemo demo;
+    private SSCData demo;
 
 
     //-----------------------------------------------------------------------
@@ -33,7 +31,9 @@ public class Course implements Iterable<Section> {
         this.title = title;
     }
 
-
+    public void addSection(Section section){
+        sections.add(section);
+    }
 
 
     public String getTitle() {
