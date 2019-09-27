@@ -54,6 +54,7 @@ public class InputWindow extends UI {
         JTextField courseDepartment = createTextField("eg. CPSC",0.2,0.25,0.2,0.05,20);
         JTextField courseNumber = createTextField("eg. 304",0.4,0.25,0.2,0.05,20);
 
+
     }
 
     protected void initializeLabel(){
