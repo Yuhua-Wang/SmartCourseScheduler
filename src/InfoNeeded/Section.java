@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 //represents a specific section of a course
 public class Section {
+    private Course course;
     private String title;
     private Activity actType;
     private String prof;
@@ -43,6 +44,13 @@ public class Section {
             }
         }
         return false;
+    }
+
+    public void setCourse(Course course){
+        this.course = course;
+        if (!course.getSections().contains(this)){
+            course.addSection(this);
+        }
     }
 
     public void setTitle(String title) {
@@ -92,6 +100,8 @@ public class Section {
     public Term getTerm() {
         return term;
     }
+
+    public Course  getCourse(){ return  course; }
 
     @Override
     public String toString() {

@@ -35,6 +35,12 @@ public class Course implements Iterable<Section> {
 
 
 
+    public void addSection( Section section){
+        sections.add(section);
+        if (section.getCourse() != this){
+            section.setCourse(this);
+        }
+    }
 
     public String getTitle() {
         return title;
