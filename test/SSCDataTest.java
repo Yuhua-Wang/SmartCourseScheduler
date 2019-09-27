@@ -1,6 +1,6 @@
 import InfoNeeded.Course;
 import InfoNeeded.Section;
-import data.JsoupDemo;
+import data.SSCData;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 
 
-public class JsoupDemoTest {
+public class SSCDataTest {
     private Section testSection;
     private Course testCourse;
-    private JsoupDemo jsoupDemo;
+    private SSCData SSCData;
     private String testURL;
     private ArrayList<Section> testList;
 
@@ -23,12 +23,12 @@ public class JsoupDemoTest {
     //put a UBC Course URL, scrap data from the given website
     @BeforeEach
     public void runBefore() {
-        jsoupDemo = new JsoupDemo();
+        SSCData = new SSCData();
         testCourse = new Course("test");
         testSection = new Section();
         testURL = testCourse.findCourseURL("CPSC", "317");
-        jsoupDemo.dataScraping(testURL);
-        testList = jsoupDemo.getSections();
+        SSCData.dataScraping(testURL);
+        testList = SSCData.getSections();
     }
 
 

@@ -1,7 +1,7 @@
 package InfoNeeded;
 
 import Support.Activity;
-import data.JsoupDemo;
+import data.SSCData;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +20,7 @@ public class Course implements Iterable<Section> {
     private ArrayList<Activity> requiredActivities;
 
     //JSoupDemo field
-    private JsoupDemo demo;
+    private SSCData demo;
 
 
     //-----------------------------------------------------------------------

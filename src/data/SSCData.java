@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 import static Support.Term.*;
 
-public class JsoupDemo {
+public class SSCData {
 
     private String myURL;
     private String profURL;
