@@ -156,7 +156,6 @@ public class JsoupDemo {
         ArrayList<CourseActivity> courseActivities = new ArrayList<>();
         String name = list.get(0).getCourseName();
         int numSections = list.size();
-        int num = 0;
         HashSet set = new HashSet();
         for (int i=0; i<numSections; i++){
             set.add(list.get(i).getActType());
