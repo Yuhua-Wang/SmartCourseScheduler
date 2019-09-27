@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 //represents a specific section of a course
 public class Section {
-    private Course course;
     private String title;
     private Activity actType;
     private String prof;
@@ -103,8 +102,6 @@ public class Section {
     public Term getTerm() {
         return term;
     }
-
-    public Course  getCourse(){ return  course; }
 
     @Override
     public String toString() {

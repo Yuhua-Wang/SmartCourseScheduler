@@ -51,34 +51,8 @@ public class TimeTableWindow extends UI {
             model.addRow(rowData);
         }
 
-        for (Section s : sections) {
-            for (ClassTime c : s.getClassTime()) {
-                int col = c.getDayOfWeek().getValue();
-                int s_row;
-                int e_row;
-                int s_hour = c.getStartTime().getHour();
-                int s_min = c.getStartTime().getMinute();
-                int e_hour = c.getEndTime().getHour();
-                int e_min = c.getEndTime().getMinute();
-                if (s_min != 0){
-                    s_row = (s_hour - 7)*2 + 1;
-                } else {
-                    s_row = (s_hour - 7)*2;
-                }
-
-                if (e_min != 0){
-                    e_row = (e_hour - 7)*2 + 1;
-                } else {
-                    e_row = (e_hour - 7)*2;
-                }
-
-                model.setValueAt(s.getTitle(), s_row, col);
-                for(int i=s_row+1; i<=e_row; i++){
-                    model.setValueAt("", i, col);
-                }
-            }
-        }
-
+        setCourseOnTable(model, sections);
+        
         JTable table = new JTable(model){
             public Component prepareRenderer (TableCellRenderer renderer, int rowIndex, int columnIndex){
                 Component component = super.prepareRenderer(renderer, rowIndex, columnIndex);
@@ -100,6 +74,38 @@ public class TimeTableWindow extends UI {
 
         return scrollPane;
     }
+
+    private void setCourseOnTable (DefaultTableModel model, ArrayList<Section> sections){
+        for (Section s : sections) {
+            for (ClassTime c : s.getClassTime()) {
+                int col = c.getDayOfWeek().getValue();
+                int s_row;
+                int e_row;
+                int s_hour = c.getStartTime().getHour();
+                int s_min = c.getStartTime().getMinute();
+                int e_hour = c.getEndTime().getHour();
+                int e_min = c.getEndTime().getMinute();
+                if (s_min != 0){
+                    s_row = (s_hour - 7)*2 + 1;
+                } else {
+                    s_row = (s_hour - 7)*2;
+                }
+
+                if (e_min != 0){
+                    e_row = (e_hour - 7)*2 + 1;
+                } else {
+                    e_row = (e_hour - 7)*2;
+                }
+
+                model.setValueAt(s.getCourseName()+"   "+s.getTitle(), s_row, col);
+                for(int i=s_row+1; i<=e_row; i++){
+                    model.setValueAt("", i, col);
+                }
+            }
+        }
+
+    }
+
 
     protected void initializeButton() {
 
