@@ -5,8 +5,6 @@ import data.JsoupDemo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 
 //represent a course (not a specific section)
@@ -33,8 +31,9 @@ public class Course implements Iterable<Section> {
         this.title = title;
     }
 
-
-
+    public void addSections(Section section){
+        sections.add(section);
+    }
 
     public String getTitle() {
         return title;
