@@ -39,24 +39,28 @@ public class InputWindow extends UI {
             listText.add(createTextField(" ", 0.4, y, 0.2, 0.05, 20));
             frame.setSize(frame.getSize());
             y += 0.05;
-            }
-        if (e.getActionCommand().equals("-")){
-            JTextField remove = listText.get(listText.size()-1);
-            JTextField remove1 = listText.get(listText.size()-2);
-            remove.setVisible(false);
-            remove1.setVisible(false);
-            y -= 0.05;
-            listText.remove(remove);
-            listText.remove(remove1);
         }
-        if (e.getActionCommand().equals("->")){
-            try {
-                new TimeTableWindow();
-            } catch (IOException e1) {
-                e1.printStackTrace();
+        if (e.getActionCommand().equals("-")) {
+            if (!listText.isEmpty()) {
+                JTextField remove = listText.get(listText.size() - 1);
+                JTextField remove1 = listText.get(listText.size() - 2);
+                remove.setVisible(false);
+                remove1.setVisible(false);
+                y -= 0.05;
+                listText.remove(remove);
+                listText.remove(remove1);
+            }else {
+                    return;
+                }
             }
-            frame.setVisible(false);
-        }
+            if (e.getActionCommand().equals("->")) {
+                try {
+                    new TimeTableWindow();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                frame.setVisible(false);
+            }
     }
 
     public ArrayList<Pair> getCourse (){
