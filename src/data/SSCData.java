@@ -1,9 +1,11 @@
 package data;
 
+import InfoNeeded.Course;
 import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
 import Support.Activity;
 import Support.ClassTime;
+import javafx.util.Pair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -34,6 +37,23 @@ public class SSCData {
     private LocalTime endTime;
     private DayOfWeek dayOfWeek;
     private ArrayList<CourseActivity> courseActivities;
+    private ArrayList<CourseActivity> totalCourseActivities;
+
+    public ArrayList allInfo(ArrayList<Pair<String, String>> courseInput){
+        totalCourseActivities = new ArrayList<>();
+            for (int a = 0; a < courseInput.size(); a++) {
+                String name = courseInput.get(a).getKey();
+                String number = courseInput.get(a).getValue();
+                Course courseN = new Course(name + " " + number);
+                dataScraping(courseN.findCourseURL(name,number));
+                getSections();
+                for (int i=0; i<courseActivities.size(); i++){
+                    totalCourseActivities.add(courseActivities.get(i));
+                }
+            }
+        return totalCourseActivities;
+    }
+
 
     public void dataScraping(String url) {
         myURL = url;
@@ -137,7 +157,7 @@ public class SSCData {
         }
         }
         courseActivities = findNumActType(list);
-        System.out.println(courseActivities.get(0).getActivity());
+        //System.out.println(courseActivities.get(0).getActivity());
         return courseActivities;
     }
 
