@@ -19,7 +19,7 @@ public class MenuWindow extends UI {
 
     @Override
     protected void initialize() {
-        initializeFrame();
+        //initializeFrame();
         initializeButton();
         initializeDialog();
     }
