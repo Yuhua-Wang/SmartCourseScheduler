@@ -15,12 +15,18 @@ import java.util.ArrayList;
 import static Support.Term.*;
 
 public class TimeTableWindow extends UI {
+    ArrayList<ArrayList<Section>> schedule;
     private ArrayList<Pair<JScrollPane, JScrollPane>> tables;
     private JLabel label;
     private int counter;
 
-    public TimeTableWindow() throws IOException {
-        super(1600, 800, 100, 100);
+
+    public TimeTableWindow(ArrayList<ArrayList<Section>> schedule) throws IOException {
+        super( schedule);
+        this.schedule = schedule;
+        initializeFrame(1600, 800, 100, 100);
+        initializeDialog();
+        initialize(schedule);
     }
 
     @Override
@@ -33,11 +39,21 @@ public class TimeTableWindow extends UI {
 
     }
 
+    protected void initialize(ArrayList<ArrayList<Section>> schedule ){
+        counter = 0;
+        initializeTable(schedule);
+        displayTable();
+        initializeButton();
+        initializeLabels();
+    }
+
     //TODO: change all functions below to private
 
     public void displayTable(){
-        tables.get(counter).getKey().setVisible(true);
-        tables.get(counter).getValue().setVisible(true);
+        if (tables.size() > 0){
+            tables.get(counter).getKey().setVisible(true);
+            tables.get(counter).getValue().setVisible(true);
+        }
     }
 
     public void undisplayTable(){

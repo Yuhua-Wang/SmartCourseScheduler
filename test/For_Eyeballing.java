@@ -51,7 +51,7 @@ public class For_Eyeballing extends JFrame {
 //        t.initializeTable(testing);
 //        t.displayTable();
 //        t.initializeButton();
-        new MenuWindow();
+
     }
 
 }
