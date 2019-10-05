@@ -50,7 +50,7 @@ public class InputWindow extends UI {
                 listText.remove(remove);
                 listText.remove(remove1);
             }else {
-                    return;
+                return;
                 }
             }
             if (e.getActionCommand().equals("->")) {
