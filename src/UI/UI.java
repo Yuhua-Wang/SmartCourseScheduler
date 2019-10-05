@@ -1,10 +1,13 @@
 package UI;
 
+import InfoNeeded.Section;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -27,6 +30,9 @@ public abstract class UI implements ActionListener {
         initializeFrame(width, height, x, y);
         initializeDialog();
         initialize();
+    }
+
+    public UI(ArrayList<ArrayList<Section>> schedule) throws IOException {
     }
 
     protected abstract void  initialize();

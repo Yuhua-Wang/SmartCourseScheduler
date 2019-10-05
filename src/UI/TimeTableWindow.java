@@ -22,7 +22,7 @@ public class TimeTableWindow extends UI {
 
 
     public TimeTableWindow(ArrayList<ArrayList<Section>> schedule) throws IOException {
-        super( schedule);
+        super(schedule);
         this.schedule = schedule;
         initializeFrame(1600, 800, 100, 100);
         initializeDialog();

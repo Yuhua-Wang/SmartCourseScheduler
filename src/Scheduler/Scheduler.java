@@ -45,7 +45,6 @@ public class Scheduler {
             System.out.println(solutionCount + " Solutions Found");
             for (Solution s : solutions) {
                 ArrayList<Section> timetable = new ArrayList<>();
-                System.out.println(" ---------------------------- ");
                 for (int i = 0; i<caVars.length; i++){
                     timetable.add(courseActivities.get(i).getSections().get(s.getIntVal(caVars[i])));
                     //System.out.println(s.getIntVal(caVars[i]));
