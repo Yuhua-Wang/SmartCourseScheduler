@@ -49,8 +49,10 @@ public class Scheduler {
         ArrayList<ArrayList<Integer>> caByCourse = new ArrayList<>(map.values());
         for (ArrayList<Integer> i: caByCourse){
             for (int j=0; j<i.size(); j++){
-                for (int k = j+1;j<size; k++){
+                for (int k = j+1;k<size; k++){
                     //TODO: add constraint for each course
+                    Constraint c = new Constraint("SameTerm", new SameTerm(caVars[j],caVars[k],courseActivities));
+                    model.post(c);
                 }
             }
         }
