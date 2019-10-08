@@ -8,13 +8,16 @@ import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Scheduler {
     private ArrayList<CourseActivity> courseActivities;
+    private HashMap<String, ArrayList<Integer>> map;
     private int size;
 
     public Scheduler(ArrayList<CourseActivity> courseActivities){
+        map = new HashMap<>();
         this.courseActivities = courseActivities;
         size = courseActivities.size();
     }
@@ -28,6 +31,10 @@ public class Scheduler {
         IntVar[] caVars = new IntVar[size];
         for (int i = 0; i<size; i++){
             caVars[i] = model.intVar("CA_"+i,0,courseActivities.get(i).getSections().size()-1);
+
+            // build a hashmap of <Course Title, list of course activities belongs to it>
+            map.putIfAbsent(courseActivities.get(i).getTitle(), new ArrayList<Integer>());
+            map.get(courseActivities.get(i).getTitle()).add(i);
         }
 
         // add the constraint between each pair of variable
@@ -35,6 +42,16 @@ public class Scheduler {
             for (int j = i+1;j<size; j++){
                 Constraint c = new Constraint("NoTimeConflict", new NoTimeConflict(caVars[i],caVars[j],courseActivities));
                 model.post(c);
+            }
+        }
+
+        // get a list of CourseActivities (index) organized by Course
+        ArrayList<ArrayList<Integer>> caByCourse = new ArrayList<>(map.values());
+        for (ArrayList<Integer> i: caByCourse){
+            for (int j=0; j<i.size(); j++){
+                for (int k = j+1;j<size; k++){
+                    //TODO: add constraint for each course
+                }
             }
         }
 

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import static Support.Activity.LABORATORY;
 import static Support.Activity.LECTURE;
@@ -51,6 +53,15 @@ public class For_Eyeballing extends JFrame {
 //        t.initializeTable(testing);
 //        t.displayTable();
 //        t.initializeButton();
+
+        HashMap<String, ArrayList<Integer>> a = new HashMap<>();
+        a.putIfAbsent("a", new ArrayList<>());
+        a.get("a").add(2);
+        a.get("a").add(4);
+        a.putIfAbsent("b", new ArrayList<>());
+        a.get("b").add(3);
+        ArrayList<ArrayList<Integer>> b =  new ArrayList<>(a.values());
+        System.out.println(b);
 
     }
 
