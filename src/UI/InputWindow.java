@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class InputWindow extends UI {
     private ArrayList<Pair<String,String>> pairArrayList;
-    private double y = 0.3;
+    private double y = 0.25;
     private ArrayList<JTextField> listText;
     //private JPanel panel = new JPanel();
     public InputWindow() throws IOException {
@@ -28,7 +28,7 @@ public class InputWindow extends UI {
     protected void initialize() {
         pairArrayList = new ArrayList<>();
         initializeButton();
-        initializeTextfield();
+        //initializeTextfield();
         initializeLabel();
     }
 
@@ -37,7 +37,11 @@ public class InputWindow extends UI {
         JButton add = createButton("+",0.7, 0.25, 0.1,  0.05);
         JButton remove = createButton("-", 0.8,0.25,0.1,0.05);
         JButton nextPage = createButton("->",0.8,0.8,0.1,0.05);
+        JButton save = createButton("save",0.2,0.8,0.1,0.05);
+
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -60,37 +64,38 @@ public class InputWindow extends UI {
                 return;
                 }
             }
-            if (e.getActionCommand().equals("->")) {
-                try {
-                    SSCData sscData = new SSCData();
-
-                    System.out.println(getCourse().size());
-
-                    ArrayList<CourseActivity> request = sscData.allInfo(getCourse());
-                    Scheduler scheduler = new Scheduler(request);
-                    new TimeTableWindow(scheduler.generateSchedule());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+        if (e.getActionCommand().equals("save")){
+            for (int i = 0; i < listText.size(); i+=2){
+                    Pair<String,String> pair = new Pair<>(listText.get(i).getText(),listText.get(i+1).getText());
+                    pairArrayList.add(pair);
                 }
-                frame.setVisible(false);
-            }
-    }
+            System.out.println(pairArrayList.size());
+            for (int i = 0; i < pairArrayList.size(); i++){
+                System.out.println(pairArrayList.get(i));
 
-    public ArrayList<Pair<String,String>> getCourse (){
-        for (int i = 0; i < listText.size()-1; i+=2){
-            for (int j = 1; j < listText.size()-1; j+=2){
-                Pair<String,String> pair = new Pair<>(listText.get(i).getText(),listText.get(j).getText());
-                pairArrayList.add(pair);
             }
         }
-        return pairArrayList;
+        if (e.getActionCommand().equals("->")) {
+            try {
+                SSCData sscData = new SSCData();
+                ArrayList<CourseActivity> request = sscData.allInfo(pairArrayList);
+                Scheduler scheduler = new Scheduler(request);
+                new TimeTableWindow(scheduler.generateSchedule());
+            } catch (IOException e1) {
+                    e1.printStackTrace();
+            }
+            frame.setVisible(false);
+        }
+
     }
+
 
     protected void initializeTextfield(){
         JTextField courseDepartment = createTextField("CPSC",0.2,0.25,0.2,0.05,20);
-        JTextField courseNumber = createTextField("317",0.4,0.25,0.2,0.05,20);
+        JTextField courseNumber = createTextField("304",0.4,0.25,0.2,0.05,20);
         Pair<String,String> pair = new Pair<>(courseDepartment.getText(),courseNumber.getText());
         pairArrayList.add(pair);
+        System.out.println(pairArrayList.get(0));
 
     }
 
