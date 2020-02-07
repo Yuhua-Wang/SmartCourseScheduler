@@ -8,6 +8,7 @@ import data.SSCData;
 import javafx.util.Pair;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
