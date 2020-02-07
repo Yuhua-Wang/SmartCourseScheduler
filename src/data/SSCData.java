@@ -38,6 +38,7 @@ public class SSCData {
     private DayOfWeek dayOfWeek;
     private ArrayList<CourseActivity> courseActivities;
     private ArrayList<CourseActivity> totalCourseActivities;
+    private int max_retry = 5;
 
     public ArrayList allInfo(ArrayList<Pair<String, String>> courseInput){
         totalCourseActivities = new ArrayList<>();
@@ -79,7 +80,12 @@ public class SSCData {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            if (max_retry > 0){
+                System.out.println("retry......");
+                dataScraping(url);
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 
