@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -33,7 +32,7 @@ public class SSCData {
     private String comments;
     private Elements temp1;
     private Elements temp2;
-    Elements result;
+    private Elements result;
     private LocalTime startTime;
     private LocalTime endTime;
     private DayOfWeek dayOfWeek;

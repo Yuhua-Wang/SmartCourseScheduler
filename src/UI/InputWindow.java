@@ -86,16 +86,17 @@ public class InputWindow extends UI {
                 try{
                     ArrayList<CourseActivity> request = sscData.allInfo(pairArrayList);
                     Scheduler scheduler = new Scheduler(request);
-                    try{
-                        new TimeTableWindow(scheduler.generateSchedule());
-                    } catch (NoScheduleException ex){
-                        JOptionPane.showConfirmDialog(frame, "No Course Schedule Possible\n" + "Change a course and try again!",
-                                "No Course Schedule Possible", DEFAULT_OPTION, WARNING_MESSAGE);
-                    }
+                    new TimeTableWindow(scheduler.generateSchedule());
 
+                } catch (NoScheduleException ex){
+                    JOptionPane.showConfirmDialog(frame, "No Course Schedule Possible\n" + "Change a course and try again!",
+                            "No Course Schedule Possible", DEFAULT_OPTION, WARNING_MESSAGE);
                 } catch (PoorInternetConnectionException ex){
                     JOptionPane.showConfirmDialog(frame, "Cannot Connect to SSC Server\n" + "Check your internet connection and try again!",
                             "Cannot Connect to SSC Server", DEFAULT_OPTION, WARNING_MESSAGE);
+                } catch (IndexOutOfBoundsException ex){
+                    JOptionPane.showConfirmDialog(frame, "Course Not Exits\n" + "Make sure if you have entered the right subject and course number!",
+                            "Course Not Exits", DEFAULT_OPTION, WARNING_MESSAGE);
                 }
 
             } catch (IOException e1) {
