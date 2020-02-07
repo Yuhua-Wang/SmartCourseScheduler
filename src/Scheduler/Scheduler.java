@@ -2,11 +2,11 @@ package Scheduler;
 
 import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
+import Exceptions.NoScheduleException;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Scheduler {
 
     // input: nothing, output: a list of sections chosen representing a solution
     // values of each variable represent sections (each is an index for Sections field in CourseActivities)
-    public ArrayList<ArrayList<Section>> generateSchedule(){
+    public ArrayList<ArrayList<Section>> generateSchedule() throws NoScheduleException {
         Model model = new Model("Scheduler");
 
         //generate a variable for each CourseActivity
@@ -73,7 +73,7 @@ public class Scheduler {
                 timetables.add(timetable);
             }
         } else {
-            System.out.println("No Possible Schedule exists");
+            throw new NoScheduleException("No Possible Schedule exists");
         }
 
         return timetables;

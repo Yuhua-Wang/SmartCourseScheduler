@@ -1,9 +1,9 @@
 package UI;
 
-import InfoNeeded.Course;
+import Exceptions.PoorInternetConnectionException;
 import InfoNeeded.CourseActivity;
-import InfoNeeded.Section;
 import Scheduler.Scheduler;
+import Exceptions.NoScheduleException;
 import data.SSCData;
 import javafx.util.Pair;
 
@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static javax.swing.JOptionPane.*;
 
 public class InputWindow extends UI {
     private ArrayList<Pair<String,String>> pairArrayList;
@@ -80,9 +82,21 @@ public class InputWindow extends UI {
         if (e.getActionCommand().equals("->")) {
             try {
                 SSCData sscData = new SSCData();
-                ArrayList<CourseActivity> request = sscData.allInfo(pairArrayList);
-                Scheduler scheduler = new Scheduler(request);
-                new TimeTableWindow(scheduler.generateSchedule());
+                try{
+                    ArrayList<CourseActivity> request = sscData.allInfo(pairArrayList);
+                    Scheduler scheduler = new Scheduler(request);
+                    try{
+                        new TimeTableWindow(scheduler.generateSchedule());
+                    } catch (NoScheduleException ex){
+                        JOptionPane.showConfirmDialog(frame, "No Course Schedule Possible\n" + "Change a course and try again!",
+                                "No Course Schedule Possible", DEFAULT_OPTION, WARNING_MESSAGE);
+                    }
+
+                } catch (PoorInternetConnectionException ex){
+                    JOptionPane.showConfirmDialog(frame, "Cannot Connect to SSC Server\n" + "Check your internet connection and try again!",
+                            "Cannot Connect to SSC Server", DEFAULT_OPTION, WARNING_MESSAGE);
+                }
+
             } catch (IOException e1) {
                     e1.printStackTrace();
             }

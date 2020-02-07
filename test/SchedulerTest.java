@@ -2,6 +2,7 @@ import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
 import Scheduler.Scheduler;
 import Support.ClassTime;
+import Exceptions.NoScheduleException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ import static java.time.DayOfWeek.*;
     }
 
     @Test
-     void SimpleNoConflictPossible(){
+     void SimpleNoConflictPossible() throws NoScheduleException {
         Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "", "CPSC");
         LocalTime st1 = LocalTime.of(9,15);
         LocalTime et1 = LocalTime.of(10,15);
@@ -53,7 +54,7 @@ import static java.time.DayOfWeek.*;
     }
 
     @Test
-     void mediumLevelImpossible(){
+     void mediumLevelImpossible() throws NoScheduleException {
         CourseActivity ca1 = new CourseActivity("CA1", LABORATORY);
         // S1: MON WED FRI 9:15-10:15 TERM 1
         Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "", "APSC");
@@ -122,7 +123,7 @@ import static java.time.DayOfWeek.*;
     }
 
     @Test
-    void multipleSolutions(){
+    void multipleSolutions() throws NoScheduleException {
        CourseActivity ca1 = new CourseActivity("CA1", LABORATORY);
        // S1: MON WED FRI 9:15-10:15 TERM 1
        Section s1 = new Section("S1", LABORATORY, "Bowen", TERM_1, "", "CPSC");

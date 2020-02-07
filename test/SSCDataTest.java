@@ -1,3 +1,4 @@
+import Exceptions.PoorInternetConnectionException;
 import InfoNeeded.Course;
 import InfoNeeded.Section;
 import data.SSCData;
@@ -24,7 +25,7 @@ public class SSCDataTest {
 
     //put a UBC Course URL, scrap data from the given website
     @BeforeEach
-    public void runBefore() {
+    public void runBefore() throws PoorInternetConnectionException {
         SSCData = new SSCData();
         testCourse = new Course("test");
         testSection = new Section();

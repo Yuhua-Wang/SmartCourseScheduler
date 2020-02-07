@@ -1,5 +1,6 @@
 package data;
 
+import Exceptions.PoorInternetConnectionException;
 import InfoNeeded.Course;
 import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
@@ -40,7 +41,7 @@ public class SSCData {
     private ArrayList<CourseActivity> totalCourseActivities;
     private int max_retry = 5;
 
-    public ArrayList allInfo(ArrayList<Pair<String, String>> courseInput){
+    public ArrayList allInfo(ArrayList<Pair<String, String>> courseInput) throws PoorInternetConnectionException {
         totalCourseActivities = new ArrayList<>();
             for (int a = 0; a < courseInput.size(); a++) {
                 String name = courseInput.get(a).getKey();
@@ -56,7 +57,7 @@ public class SSCData {
     }
 
 
-    public void dataScraping(String url) {
+    public void dataScraping(String url) throws PoorInternetConnectionException {
         myURL = url;
         profURL = splitURL(myURL);
         try {
@@ -84,7 +85,7 @@ public class SSCData {
                 System.out.println("retry......");
                 dataScraping(url);
             } else {
-                e.printStackTrace();
+                throw new PoorInternetConnectionException("Cannot Connect to SSC");
             }
         }
     }
