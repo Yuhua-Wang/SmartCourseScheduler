@@ -67,7 +67,7 @@ public class InputWindow extends UI {
             }
         if (e.getActionCommand().equals("save")){
             for (int i = 0; i < listText.size(); i+=2){
-                    Pair<String,String> pair = new Pair<>(listText.get(i).getText(),listText.get(i+1).getText());
+                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim(),listText.get(i+1).getText().trim());
                     pairArrayList.add(pair);
                 }
             System.out.println(pairArrayList.size());
@@ -90,7 +90,7 @@ public class InputWindow extends UI {
 
     }
 
-
+    // this function is not called
     protected void initializeTextfield(){
         JTextField courseDepartment = createTextField("CPSC",0.2,0.25,0.2,0.05,20);
         JTextField courseNumber = createTextField("304",0.4,0.25,0.2,0.05,20);
