@@ -40,7 +40,7 @@ public class InputWindow extends UI {
         JButton add = createButton("+",0.7, 0.25, 0.1,  0.05);
         JButton remove = createButton("-", 0.8,0.25,0.1,0.05);
         JButton nextPage = createButton("->",0.8,0.8,0.1,0.05);
-        JButton save = createButton("save",0.2,0.8,0.1,0.05);
+        //JButton save = createButton("save",0.2,0.8,0.1,0.05);
 
     }
 
@@ -67,19 +67,20 @@ public class InputWindow extends UI {
                 return;
                 }
             }
-        if (e.getActionCommand().equals("save")){
-            for (int i = 0; i < listText.size(); i+=2){
-                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
-                            listText.get(i+1).getText().trim().toUpperCase() );
-                    pairArrayList.add(pair);
-                }
-            System.out.println(pairArrayList.size());
-            for (int i = 0; i < pairArrayList.size(); i++){
-                System.out.println(pairArrayList.get(i));
-
-            }
-        }
+//        if (e.getActionCommand().equals("save")){
+//            for (int i = 0; i < listText.size(); i+=2){
+//                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
+//                            listText.get(i+1).getText().trim().toUpperCase() );
+//                    pairArrayList.add(pair);
+//                }
+//            System.out.println(pairArrayList.size());
+//            for (int i = 0; i < pairArrayList.size(); i++){
+//                System.out.println(pairArrayList.get(i));
+//
+//            }
+//        }
         if (e.getActionCommand().equals("->")) {
+            saveText();
             try {
                 SSCData sscData = new SSCData();
                 try{
@@ -121,6 +122,19 @@ public class InputWindow extends UI {
         JLabel courseLabel = createLabel("Course Number", 0.55, 0.2, 0.5, 0.1, 20);
 
 
+    }
+
+    private void saveText(){
+        for (int i = 0; i < listText.size(); i+=2){
+            Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
+                    listText.get(i+1).getText().trim().toUpperCase() );
+            pairArrayList.add(pair);
+        }
+        System.out.println(pairArrayList.size());
+        for (int i = 0; i < pairArrayList.size(); i++){
+            System.out.println(pairArrayList.get(i));
+
+        }
     }
 
 }
