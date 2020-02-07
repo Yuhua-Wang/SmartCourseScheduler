@@ -67,7 +67,8 @@ public class InputWindow extends UI {
             }
         if (e.getActionCommand().equals("save")){
             for (int i = 0; i < listText.size(); i+=2){
-                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim(),listText.get(i+1).getText().trim());
+                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
+                            listText.get(i+1).getText().trim().toUpperCase() );
                     pairArrayList.add(pair);
                 }
             System.out.println(pairArrayList.size());
@@ -85,7 +86,7 @@ public class InputWindow extends UI {
             } catch (IOException e1) {
                     e1.printStackTrace();
             }
-            frame.setVisible(false);
+            //frame.dispose();
         }
 
     }

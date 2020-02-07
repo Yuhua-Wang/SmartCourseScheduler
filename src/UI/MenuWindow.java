@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
-
 public class MenuWindow extends UI {
     private int frameWidth = 800;
     private int frameHeight = 600;
@@ -47,7 +44,7 @@ public class MenuWindow extends UI {
             frame.dispose();
         }
         else  if(e.getActionCommand().equals("Exit")){
-            confirmExit();
+            exitListener();
         }
     }
 }

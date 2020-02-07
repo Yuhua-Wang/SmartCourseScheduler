@@ -30,6 +30,11 @@ public class TimeTableWindow extends UI {
     }
 
     @Override
+    protected void exitListener(){
+        frame.dispose();
+    }
+
+    @Override
     protected void initialize() {
         counter = 0;
         //initializeTable(testing);
@@ -47,28 +52,27 @@ public class TimeTableWindow extends UI {
         initializeLabels();
     }
 
-    //TODO: change all functions below to private
 
-    public void displayTable(){
+    private void displayTable(){
         if (tables.size() > 0){
             tables.get(counter).getKey().setVisible(true);
             tables.get(counter).getValue().setVisible(true);
         }
     }
 
-    public void undisplayTable(){
+    private void undisplayTable(){
         tables.get(counter).getKey().setVisible(false);
         tables.get(counter).getValue().setVisible(false);
     }
 
-    public void initializeTable( ArrayList<ArrayList<Section>> courseCombinations){
+    private void initializeTable( ArrayList<ArrayList<Section>> courseCombinations){
         tables = new ArrayList<>();
         for (ArrayList<Section> sections: courseCombinations){
             tables.add(newTable(sections));
         }
     }
 
-    public Pair<JScrollPane, JScrollPane> newTable(ArrayList<Section> sections){
+    private Pair<JScrollPane, JScrollPane> newTable(ArrayList<Section> sections){
 
         final DefaultTableModel term1 = creatModelForTable();
         final DefaultTableModel term2 = creatModelForTable();

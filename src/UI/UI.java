@@ -20,19 +20,19 @@ public abstract class UI implements ActionListener {
     private int buttonHeight = 30;
     private int buttonWidth = 400;
 
-    public UI() throws IOException {
+    public UI() {
         initializeFrame();
         initializeDialog();
         initialize();
     }
 
-    public UI(int width, int height, int x, int y) throws IOException {
+    public UI(int width, int height, int x, int y) {
         initializeFrame(width, height, x, y);
         initializeDialog();
         initialize();
     }
 
-    public UI(ArrayList<ArrayList<Section>> schedule) throws IOException {
+    public UI(ArrayList<ArrayList<Section>> schedule){
     }
 
     protected abstract void  initialize();
@@ -46,14 +46,14 @@ public abstract class UI implements ActionListener {
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setResizable(true);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                confirmExit();
+                exitListener();
             }
         });
+        frame.setResizable(true);
+        frame.setVisible(true);
     }
 
     protected  void initializeFrame() {
@@ -69,7 +69,7 @@ public abstract class UI implements ActionListener {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                confirmExit();
+                exitListener();
             }
         });
     }
@@ -158,9 +158,7 @@ public abstract class UI implements ActionListener {
         return textField;
     }
 
-    protected void confirmExit(){
-        //TODO: remove the line below after testing
-        System.exit(0);
+    protected void exitListener(){
         if (JOptionPane.showConfirmDialog(frame, "Do you ready want to close the program?\n" + " Unsaved schedule will be lost",
                 "Exit?", YES_NO_OPTION, QUESTION_MESSAGE) == 0){
             System.exit(0);
