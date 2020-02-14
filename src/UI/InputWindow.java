@@ -133,9 +133,10 @@ public class InputWindow extends UI {
 
     private void saveText(){
         for (int i = 0; i < listText.size(); i+=2){
-            Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
-                    listText.get(i+1).getText().trim().toUpperCase() );
-            if(! pairArrayList.contains(pair)){
+            String subject = listText.get(i).getText().trim().toUpperCase();
+            String number = listText.get(i+1).getText().trim().toUpperCase();
+            Pair<String,String> pair = new Pair<>(subject, number);
+            if(! (pairArrayList.contains(pair) || subject.isEmpty() || number.isEmpty())){
                 pairArrayList.add(pair);
             }
         }
