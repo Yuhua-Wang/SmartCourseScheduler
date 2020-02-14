@@ -13,11 +13,11 @@ import java.util.List;
 
 public class Scheduler {
     private ArrayList<CourseActivity> courseActivities;
-    private HashMap<String, ArrayList<Integer>> map;
+    private HashMap<String, ArrayList<Integer>> coursesAndTheirActivities;
     private int size;
 
     public Scheduler(ArrayList<CourseActivity> courseActivities){
-        map = new HashMap<>();
+        coursesAndTheirActivities = new HashMap<>();
         this.courseActivities = courseActivities;
         size = courseActivities.size();
     }
@@ -32,12 +32,12 @@ public class Scheduler {
         for (int i = 0; i<size; i++){
             caVars[i] = model.intVar("CA_"+i,0,courseActivities.get(i).getSections().size()-1);
 
-            // build a hashmap of <Course Title, list of course activities belongs to it>
-            map.putIfAbsent(courseActivities.get(i).getTitle(), new ArrayList<Integer>());
-            map.get(courseActivities.get(i).getTitle()).add(i);
+            // build a hashmap of <Course Title, list of course activities (index) belongs to it>
+            coursesAndTheirActivities.putIfAbsent(courseActivities.get(i).getTitle(), new ArrayList<Integer>());
+            coursesAndTheirActivities.get(courseActivities.get(i).getTitle()).add(i);
         }
 
-        // add the constraint between each pair of variable
+        // Add Constraints: there should be no time conflict between each course activity
         for (int i = 0; i<size-1; i++){
             for (int j = i+1;j<size; j++){
                 Constraint c = new Constraint("NoTimeConflict", new NoTimeConflict(caVars[i],caVars[j],courseActivities));
@@ -45,13 +45,15 @@ public class Scheduler {
             }
         }
 
+        // Add Constraints: All course activities of a course should be in the same term
         // get a list of CourseActivities (index) organized by Course
-        ArrayList<ArrayList<Integer>> caByCourse = new ArrayList<>(map.values());
-        for (ArrayList<Integer> i: caByCourse){
-            for (int j=0; j<i.size(); j++){
-                for (int k = j+1;k<size; k++){
-                    //TODO: add constraint for each course
-                    Constraint c = new Constraint("SameTerm", new SameTerm(caVars[j],caVars[k],courseActivities));
+        ArrayList<ArrayList<Integer>> caByCourse = new ArrayList<>(coursesAndTheirActivities.values());
+        for (ArrayList<Integer> caInOneCourse: caByCourse){
+            for (int j=0; j<caInOneCourse.size()-1; j++){
+                for (int k = j+1;k<caInOneCourse.size(); k++){
+                    int ca1 = caInOneCourse.get(j);
+                    int ca2 = caInOneCourse.get(k);
+                    Constraint c = new Constraint("SameTerm", new SameTerm(caVars[ca1],caVars[ca2],courseActivities));
                     model.post(c);
                 }
             }

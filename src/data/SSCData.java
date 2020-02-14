@@ -40,7 +40,7 @@ public class SSCData {
     private ArrayList<CourseActivity> totalCourseActivities;
     private int max_retry = 5;
 
-    public ArrayList allInfo(ArrayList<Pair<String, String>> courseInput) throws PoorInternetConnectionException {
+    public ArrayList<CourseActivity> allInfo(ArrayList<Pair<String, String>> courseInput) throws PoorInternetConnectionException {
         totalCourseActivities = new ArrayList<>();
             for (int a = 0; a < courseInput.size(); a++) {
                 String name = courseInput.get(a).getKey();

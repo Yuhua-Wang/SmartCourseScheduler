@@ -99,7 +99,7 @@ public class InputWindow extends UI {
                 JOptionPane.showConfirmDialog(frame, "Course Not Exits\n" + "Make sure if you have entered the right subject and course number!",
                         "Course Not Exits", DEFAULT_OPTION, WARNING_MESSAGE);
             } catch (IOException e1) {
-                JOptionPane.showConfirmDialog(frame, "Congratulation! You Discovered a Bug!!\n" + "Report to us and earn a \" Thank You \" ! \n",
+                JOptionPane.showConfirmDialog(frame, "Congratulation! You Discovered a Bug!!\n" + "Report to us to earn a \" Thank You \" ! \n",
                         "Course Not Exits", DEFAULT_OPTION, WARNING_MESSAGE);
                 e1.printStackTrace();
             }
