@@ -67,6 +67,8 @@ public class InputWindow extends UI {
                 return;
                 }
             }
+
+        // commented out: "->" button would now automatically save
 //        if (e.getActionCommand().equals("save")){
 //            for (int i = 0; i < listText.size(); i+=2){
 //                    Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
@@ -103,6 +105,9 @@ public class InputWindow extends UI {
                         "Course Not Exits", DEFAULT_OPTION, WARNING_MESSAGE);
                 e1.printStackTrace();
             }
+
+            // clean the pairArrayList for new
+            pairArrayList = new ArrayList<>();
             //frame.dispose();
         }
 
@@ -130,12 +135,13 @@ public class InputWindow extends UI {
         for (int i = 0; i < listText.size(); i+=2){
             Pair<String,String> pair = new Pair<>(listText.get(i).getText().trim().toUpperCase() ,
                     listText.get(i+1).getText().trim().toUpperCase() );
-            pairArrayList.add(pair);
+            if(! pairArrayList.contains(pair)){
+                pairArrayList.add(pair);
+            }
         }
         System.out.println(pairArrayList.size());
         for (int i = 0; i < pairArrayList.size(); i++){
             System.out.println(pairArrayList.get(i));
-
         }
     }
 
