@@ -139,7 +139,7 @@ public class InputWindow extends UI {
                 pairArrayList.add(pair);
             }
         }
-        System.out.println(pairArrayList.size());
+        System.out.println("Number of Courses: " + pairArrayList.size());
         for (int i = 0; i < pairArrayList.size(); i++){
             System.out.println(pairArrayList.get(i));
         }
