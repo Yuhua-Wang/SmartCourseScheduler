@@ -83,7 +83,7 @@ public class InputWindow extends UI {
 //        }
         if (e.getActionCommand().equals("->")) {
             saveText();
-
+            showProessingInfo();
             try {
 
                 SSCData sscData = new SSCData();
@@ -136,7 +136,7 @@ public class InputWindow extends UI {
             String subject = listText.get(i).getText().trim().toUpperCase();
             String number = listText.get(i+1).getText().trim().toUpperCase();
             Pair<String,String> pair = new Pair<>(subject, number);
-            if(! (pairArrayList.contains(pair) || subject.isEmpty() || number.isEmpty())){
+            if(! (pairArrayList.contains(pair) || subject.isEmpty() || number.isEmpty()) ){
                 pairArrayList.add(pair);
             }
         }
@@ -144,6 +144,17 @@ public class InputWindow extends UI {
         for (int i = 0; i < pairArrayList.size(); i++){
             System.out.println(pairArrayList.get(i));
         }
+    }
+
+    private void showProessingInfo(){
+        // create another thread so that this dialog does not block the execution
+        Thread t = new Thread(new Runnable(){
+            public void run(){
+                JOptionPane.showMessageDialog(frame, "Processing\n" + "This may take 1 or 2 minutes",
+                        "Processing", INFORMATION_MESSAGE);
+            }
+        });
+        t.start();
     }
 
 }
