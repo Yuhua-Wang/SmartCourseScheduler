@@ -189,8 +189,8 @@ public class TimeTableWindow extends UI {
     }
 
     public void initializeButton() {
-        JButton previous = createButton("<- Previous",0.2, 0.05, 0.1,  0.05);
-        JButton next = createButton("Next ->",0.8,0.05, 0.1, 0.05);
+        JButton previous = createButton("<- Previous",0.2, 0.05, 0.15,  0.05);
+        JButton next = createButton("Next ->",0.8,0.05, 0.15, 0.05);
     }
 
     @Override
@@ -214,12 +214,12 @@ public class TimeTableWindow extends UI {
     }
 
     private void initializeLabels (){
-        label = createLabel("Course Arrangement "+ Integer.toString(counter+1), 0.54, 0.05, 0.2, 0.05, 24);
+        label = createLabel("Course Arrangement "+ Integer.toString(counter+1) + " of " + schedule.size(), 0.54, 0.05, 0.3, 0.05, 24);
         frame.add(label);
     }
 
     private void updateLabels(){
-        label.setText("Course Arrangement "+ Integer.toString(counter+1));
+        label.setText("Course Arrangement "+ Integer.toString(counter+1) + " of " + schedule.size());
     }
 
 }

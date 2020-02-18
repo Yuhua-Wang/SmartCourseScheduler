@@ -57,7 +57,7 @@ public abstract class UI implements ActionListener {
     }
 
     protected  void initializeFrame() {
-        frame = new JFrame("Simple Todo List");
+        frame = new JFrame("Smart Scheduler");
         frame.setSize(frameWidth,frameHeight);
         frame.setLocation(500,500);
         frame.getContentPane().setBackground(Color.WHITE );
