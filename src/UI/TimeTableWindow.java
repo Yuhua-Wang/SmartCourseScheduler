@@ -176,11 +176,10 @@ public class TimeTableWindow extends UI {
     }
 
     private void setValue (DefaultTableModel model, Section s, int s_row, int col, int e_row){
-        model.setValueAt(s.getCourseName()+"   "+s.getTitle(), s_row, col);
-        for(int i=s_row+1; i<=e_row; i++){
-            model.setValueAt("", i, col);
-        }
-        for(int i=s_row+1; i<=e_row; i++){
+        //model.setValueAt(s.getCourseName()+"   "+s.getTitle(), s_row, col);
+        model.setValueAt(s.getCourseName(), s_row, col);
+        model.setValueAt("section: "+s.getTitle(), s_row+1, col);
+        for(int i=s_row+2; i<=e_row; i++){
             model.setValueAt("", i, col);
         }
     }
