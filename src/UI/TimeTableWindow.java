@@ -11,22 +11,46 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.stream.Collectors;
 
 import static Support.Term.*;
 
 public class TimeTableWindow extends UI {
-    ArrayList<ArrayList<Section>> schedule;
+    private ArrayList<ArrayList<Section>> schedule;
+    private Hashtable<HashSet<Section>, ArrayList<ArrayList<Section>>> groupedTimetables;
     private ArrayList<Pair<JScrollPane, JScrollPane>> tables;
     private JLabel label;
     private int counter;
+    private String pageTitle;
 
-
+    // constructor for displaying all sections in each schedule
     public TimeTableWindow(ArrayList<ArrayList<Section>> schedule) throws IOException {
-        super(schedule);
+        super(1600, 800, 100, 100);
+        pageTitle = "Complete Schedule ";
         this.schedule = schedule;
-        initializeFrame(1600, 800, 100, 100);
         initializeDialog();
         initialize(schedule);
+    }
+
+    // constructor for displaying only lectures in each schedule
+    public TimeTableWindow(Hashtable<HashSet<Section>, ArrayList<ArrayList<Section>>> groupedTimetables) throws IOException {
+        super(1600, 800, 100, 100);
+        pageTitle = "Lectures Schedule ";
+        this.groupedTimetables = groupedTimetables;
+
+        // convert lectures (Hashtable<HashSet<Section>,...) to  ArrayList<ArrayList<Section>>
+        ArrayList<ArrayList<Section>> temp = new ArrayList<>();
+        for (HashSet<Section> h : groupedTimetables.keySet()){
+            temp.add(new ArrayList<>(h));
+        }
+
+        this.schedule = temp;
+        initializeDialog();
+        initialize(schedule);
+
+        JButton viewComplete = createButton("View the Complete Schedule", 0.5, 0.1, 0.3,  0.05);
     }
 
     @Override
@@ -37,11 +61,6 @@ public class TimeTableWindow extends UI {
     @Override
     protected void initialize() {
         counter = 0;
-        //initializeTable(testing);
-        //displayTable();
-        //initializeButton();
-        initializeLabels();
-
     }
 
     protected void initialize(ArrayList<ArrayList<Section>> schedule ){
@@ -211,15 +230,29 @@ public class TimeTableWindow extends UI {
                 updateLabels();
             }
         }
+        else if (e.getActionCommand().equals("View the Complete Schedule")){
+
+            HashSet<Section> temp = new HashSet<>();
+            for (Section s : schedule.get(counter)){
+                temp.add(s);
+            }
+
+            try {
+                new TimeTableWindow(groupedTimetables.get(temp));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        }
     }
 
     private void initializeLabels (){
-        label = createLabel("Course Arrangement "+ Integer.toString(counter+1) + " of " + schedule.size(), 0.54, 0.05, 0.3, 0.05, 24);
+        label = createLabel(pageTitle+ Integer.toString(counter+1) + " of " + schedule.size(), 0.54, 0.05, 0.3, 0.05, 24);
         frame.add(label);
     }
 
     private void updateLabels(){
-        label.setText("Course Arrangement "+ Integer.toString(counter+1) + " of " + schedule.size());
+        label.setText(pageTitle + Integer.toString(counter+1) + " of " + schedule.size());
     }
 
 }

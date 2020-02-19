@@ -1,24 +1,9 @@
 
 
-import InfoNeeded.Section;
-import Support.Activity;
-import Support.ClassTime;
-import Support.Term;
-import UI.MenuWindow;
-import UI.TimeTableWindow;
 import javax.swing.*;
 import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-
-import static Support.Activity.LABORATORY;
-import static Support.Activity.LECTURE;
-import static Support.Term.TERM_1;
-import static Support.Term.TERM_2;
-import static java.time.DayOfWeek.*;
 
 
 public class For_Eyeballing extends JFrame {

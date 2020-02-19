@@ -21,4 +21,5 @@ public class CourseActivity extends Course {
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+
 }

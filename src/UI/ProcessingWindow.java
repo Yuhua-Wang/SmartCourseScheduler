@@ -8,7 +8,7 @@ public class ProcessingWindow extends UI {
     private JProgressBar progressBar;
 
     public  ProcessingWindow(){
-        super(800, 200, 500, 500);
+        super(600, 200, 500, 500);
         progressBar = new JProgressBar();
         progressBar.setIndeterminate(true);
         frame.add(progressBar);

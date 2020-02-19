@@ -4,6 +4,7 @@ import Support.Activity;
 import data.SSCData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 
@@ -53,6 +54,10 @@ public class Course implements Iterable<Section> {
         return "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept="
                 +courseName+"&course="
                 +courseNum;
+    }
+
+    public void removeDuplicateSections(){
+        sections = new ArrayList<>(new HashSet<>(sections));
     }
 
     @Override

@@ -32,9 +32,6 @@ public abstract class UI implements ActionListener {
         initialize();
     }
 
-    public UI(ArrayList<ArrayList<Section>> schedule){
-    }
-
     protected abstract void  initialize();
 
 

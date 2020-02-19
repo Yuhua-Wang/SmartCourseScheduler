@@ -48,11 +48,11 @@ public class Section {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.trim();
     }
 
     public void setCourseName(String name) {
-        courseName = name;
+        courseName = name.trim();
     }
 
     public void addClassTime(ClassTime ct){
@@ -107,5 +107,17 @@ public class Section {
     public String toString() {
         return title;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (!(obj instanceof Section)){
+            return false;
+        }
+        Section theOther = (Section) obj;
+        return theOther.getTitle().equals(this.title) && theOther.getActType() == actType && theOther.getTerm() == this.term &&
+                theOther.getCourseName().equals(this.getCourseName());
+    }
 }
