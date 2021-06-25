@@ -1,15 +1,9 @@
 import Exceptions.PoorInternetConnectionException;
 import InfoNeeded.Course;
 import InfoNeeded.Section;
+import Support.Pair;
 import data.SSCData;
-import javafx.util.Pair;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 

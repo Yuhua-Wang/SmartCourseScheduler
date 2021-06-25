@@ -2,7 +2,7 @@ package UI;
 
 import InfoNeeded.Section;
 import Support.ClassTime;
-import javafx.util.Pair;
+import Support.Pair;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

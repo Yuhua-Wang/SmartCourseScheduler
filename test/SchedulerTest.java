@@ -4,7 +4,7 @@ import Scheduler.Scheduler;
 import Support.ClassTime;
 import Exceptions.NoScheduleException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

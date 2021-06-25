@@ -6,7 +6,7 @@ import InfoNeeded.CourseActivity;
 import InfoNeeded.Section;
 import Support.Activity;
 import Support.ClassTime;
-import javafx.util.Pair;
+import Support.Pair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -110,6 +110,7 @@ public class SSCData {
         } else {
             termCourse(my_list);
         }
+        System.out.println(my_list);
         return my_list;
     }
 

@@ -1,6 +1,6 @@
 import InfoNeeded.Section;
 import Support.ClassTime;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.time.LocalTime;
 
@@ -9,8 +9,8 @@ import static Support.Term.TERM_1;
 import static Support.Term.TERM_2;
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.TUESDAY;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 
 public class SectionTest {
