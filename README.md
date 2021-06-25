@@ -11,7 +11,7 @@ This model works fine for small inputs (e.g. 2-3 courses) but soon encounters ru
 <br/><br/>
 In another course we took later, we learnt that scheduling problem is NP-Hard. There exists no efficient algorithm to obtain all valid solutions. We will try to implement a heuristics algorithm to find some "good enough" timetables when we have a chance.
 ## Get Started
-The setup is simple: Clone the code and run Main
+The setup is simple: Clone the code and run Main  <br/><br/>
 (Note: This project scrapes UBC's course registeration website, and is up-to-date as of February 2020. It may no longer work if UBC changed the structure of its website.)
 ## Overview
 
