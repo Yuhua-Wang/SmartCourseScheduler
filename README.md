@@ -1,7 +1,7 @@
 
 # Smart Course Scheduler
 
-Smart Course Scheduler generates course schedules. Users only need to type in the courses they are planning to take in the upcoming school years, and all valid course schedules would be output in timetable format. <br/><br/>
+Smart Course Scheduler generates course schedules. Users only need to type in the courses they are planning to take in the upcoming school years. This application would scrape  relevant information including the courses' required activities, sections, and class time from [UBC's course registration website](https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-all-departments). All valid course schedules that do not have time conflicts would be generated in timetable format. <br/><br/>
 Technologies used in this project: Java, HTML, Jsoup, Junit testing, Constraint Networks 
 <br/><br/>
 ## Inspirations
