@@ -7,7 +7,7 @@ Technologies used in this project: Java, HTML, Jsoup, Junit testing, Constraint 
 ## Inspirations
 This application is inspired by the [constraint network model](http://www.cs.sjsu.edu/faculty/pearce/modules/patterns/events/ConstraintNetworks.htm) I learnt from an introductory AI course. I reduced the course scheduling problem into a constraint network problem. The courses are the variables, the sections are the possible values of the variables, and time conflicts are the constraints.<br/>
 ## Problems
-This model works fine for small inputs (e.g. 2-3 courses) but soon encounters runtime problems when the number of courses grows large. Unfortunately, we failed to fix this issue, and the application can be used only as a toy prototype.
+This model works fine for small inputs (e.g. 3-5 courses) but soon encounters runtime problems when the number of courses grows large. Unfortunately, we failed to fix this issue, and the application can be used only as a toy prototype.
 <br/><br/>
 In another course we took later, we learnt that scheduling problem is NP-Hard. There exists no efficient algorithm to obtain all valid solutions. We will try to implement a heuristics algorithm to find some "good enough" timetables when we have a chance.
 ## Get Started
